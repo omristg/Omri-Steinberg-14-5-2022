@@ -1,0 +1,21 @@
+// Breakpoints
+$break-narrow: 450px;
+$break-normal: 900px;
+$break-wide: 1400px;
+
+// Paddings
+:root {
+    --layout-padding: 5px;
+
+    @media (min-width: $break-narrow) {
+        --layout-padding: 40px;
+    }
+
+    @media (min-width: $break-normal) {
+        --layout-padding: 120px;
+    }
+
+    @media (min-width: $break-wide) {
+        --layout-padding: 200px;
+    }
+}

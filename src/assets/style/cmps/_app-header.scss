@@ -1,0 +1,36 @@
+.app-header {
+    $textColor: white;
+    $bgColor: #202020;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-inline: var(--layout-padding);
+    padding-block: 2rem;
+    margin-bottom: 1.5rem;
+    background-color: $bgColor;
+    color: $textColor;
+    .logo {
+        cursor: pointer;
+    }
+
+    nav {
+        display: flex;
+
+        > *:not(:first-child) {
+            --nav-margin: 2rem;
+            margin-inline-start: var(--nav-margin);
+            position: relative;
+            &:before {
+                content: "|";
+                position: absolute;
+                left: calc(var(--nav-margin) / 2 * -1);
+                color: $textColor;
+                pointer-events: none;
+            }
+        }
+
+        .active {
+            color: var(--accent);
+        }
+    }
+}
