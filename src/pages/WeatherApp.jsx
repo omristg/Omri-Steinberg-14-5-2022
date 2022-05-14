@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { weatherService } from "../store/forecast/weather.service"
 import { getForecastAndCurrWeather } from "../store/forecast/weather.slice"
 
+import { ForecastList } from "../cmps/ForecastList"
 
 export const WeatherApp = () => {
 
@@ -20,7 +21,7 @@ export const WeatherApp = () => {
 
     return (
         <div className="weather-app">
-            WeatherApp works!
+            <ForecastList />
         </div>
     )
 }
