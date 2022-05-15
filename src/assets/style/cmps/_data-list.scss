@@ -12,7 +12,8 @@
         overflow: hidden;
         text-overflow: ellipsis;
 
-        &:hover {
+        &:hover,
+        &.selected {
             background-color: var(--accent);
             cursor: pointer;
         }

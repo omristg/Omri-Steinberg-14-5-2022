@@ -12,9 +12,7 @@ export const ForecastPreview = ({ forecast }) => {
 
     const shortenedDay = (dateString) => {
         const newDate = new Date(dateString)
-        const res = new Intl.DateTimeFormat('en-US', { weekday: 'short' }).format(newDate)
-        console.log('res:', res);
-        return res
+        return new Intl.DateTimeFormat('en-US', { weekday: 'short' }).format(newDate)
     }
 
     const TemperatureUnit = () => {
