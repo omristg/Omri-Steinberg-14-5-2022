@@ -1,7 +1,7 @@
 import axios from "axios"
 
 // const API_KEY = process.env.REACT_APP_WEATHER_API_KEY
-const API_KEY = '9TNYr6CqicavM7PFr62AiGD8xvcA0JUG'
+const API_KEY = 'H3XWBbkAd0UWexItRa3Jnew91XbMLAF1'
 const TEL_AVIV_CITY_KEY = '215854'
 
 

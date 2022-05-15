@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { weatherService } from '../forecast/weather.service'
 import { favoriteService } from './favorite.service'
+import { setIsFavorite } from '../forecast/weather.slice'
 
 const initialState = {
     favorites: [],
@@ -8,7 +9,6 @@ const initialState = {
     isError: false,
     message: ''
 }
-
 
 export const getFavorites = createAsyncThunk('favorite/getFavorites',
     async (_, thunkAPI) => {
@@ -29,20 +29,32 @@ export const getFavorites = createAsyncThunk('favorite/getFavorites',
 )
 
 
+export const addFavorite = createAsyncThunk('favorite/addFavorite',
+    (city, { dispatch }) => {
+        dispatch(setIsFavorite(true))
+        const cityToSave = { ...city, isFavorite: true }
+        return favoriteService.addFavorite(cityToSave)
+    }
+)
+
+export const removeFavorite = createAsyncThunk('favorite/removeFavorite',
+    (cityId, { dispatch }) => {
+        dispatch(setIsFavorite(false))
+        return favoriteService.removeFavorite(cityId)
+    }
+)
+
+
 export const favoriteSlice = createSlice({
     name: 'favorite',
     initialState,
     reducers: {
-        removeFavorites: (state, action) => {
-            const { cityId } = action.payload
+        removeFavorite: (state, action) => {
+            const cityId = action.payload
             const filteredFavorites = favoriteService.removeFavorite(cityId)
-            state = filteredFavorites
+            state.favorites = filteredFavorites
         },
-        addFavorite: (state, action) => {
-            const cityToSave = action.payload
-            const newFavorites = favoriteService.addFavorite(cityToSave)
-            state = newFavorites
-        },
+
     },
     extraReducers: (builder) => {
         builder
@@ -58,10 +70,16 @@ export const favoriteSlice = createSlice({
                 state.favorites = action.payload
                 state.isLoading = false
             })
+            .addCase(addFavorite.fulfilled, (state, action) => {
+                state.favorites = action.payload
+            })
+            .addCase(removeFavorite.fulfilled, (state, action) => {
+                state.favorites = action.payload
+            })
 
     }
 })
 
-export const { addFavorite } = favoriteSlice.actions
+export const { } = favoriteSlice.actions
 
 export default favoriteSlice.reducer

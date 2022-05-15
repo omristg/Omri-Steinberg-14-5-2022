@@ -1,0 +1,25 @@
+.spinner-container {
+    position: absolute;
+    inset: 0;
+    z-index: 150;
+    display: grid;
+    place-items: center;
+
+    .spinner {
+        width: 64px;
+        height: 64px;
+        border: 8px solid;
+        border-color: var(--accent) transparent var(--accent) transparent;
+        border-radius: 50%;
+        animation: spin 1.2s linear infinite;
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

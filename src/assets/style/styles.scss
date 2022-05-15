@@ -13,7 +13,7 @@
 
 // Pages
 
-@import "./pages/favorites-page";
+@import "./pages/favorites-list";
 @import "./pages/weather-app";
 
 // Cmps
@@ -26,3 +26,4 @@
 @import "./cmps/current-weather";
 @import "./cmps/city-details";
 @import "./cmps/favorite-preview";
+@import "./cmps/layout/spinner";

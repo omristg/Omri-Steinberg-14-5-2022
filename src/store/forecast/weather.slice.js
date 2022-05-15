@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { favoriteService } from '../favorite/favorite.service'
 import { weatherService } from './weather.service'
 
+
 const initialState = {
     currCity: {
         cityId: '215854',
@@ -25,6 +26,7 @@ export const getForecastAndCurrWeather = createAsyncThunk('weather/getForecastAn
                 weatherService.getCurrConditions(cityId),
                 weatherService.getForecast(cityId)
             ])
+            thunkAPI.dispatch(checkIsFavorite(cityId))
             return { currWeather, forecasts }
         } catch (err) {
             const msg = err.response?.data?.message || err.message || err.toString()
@@ -45,8 +47,10 @@ export const weatherSlice = createSlice({
             const cityId = action.payload
             const favorites = favoriteService.getFavorites()
             const isFavorite = favorites.some(favCity => favCity.cityId === cityId)
-            console.log(isFavorite);
             if (isFavorite) state.currCity.isFavorite = true
+        },
+        setIsFavorite: (state, action) => {
+            state.currCity.isFavorite = action.payload
         }
     },
     extraReducers: (builder) => {
@@ -54,21 +58,20 @@ export const weatherSlice = createSlice({
             .addCase(getForecastAndCurrWeather.pending, (state) => {
                 state.isLoading = true
             })
-            .addCase(getForecastAndCurrWeather.fulfilled, (state, action) => {
-                const { currWeather, forecasts } = action.payload
-                state.currWeather = currWeather
-                state.forecasts = forecasts
-                state.isLoading = false
-
-            })
             .addCase(getForecastAndCurrWeather.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload
             })
+            .addCase(getForecastAndCurrWeather.fulfilled, (state, action) => {
+                const { currWeather, forecasts } = action.payload
+                state.currWeather = currWeather
+                state.forecasts = forecasts
+                state.isLoading = false
+            })
     }
 })
 
-export const { setCurrCity, checkIsFavorite } = weatherSlice.actions
+export const { setCurrCity, checkIsFavorite, setIsFavorite } = weatherSlice.actions
 
 export default weatherSlice.reducer

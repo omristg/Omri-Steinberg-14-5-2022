@@ -18,6 +18,11 @@
                 width: 2.5rem;
                 height: 2.5rem;
                 cursor: pointer;
+                transition: color 0.1s;
+
+                &:hover {
+                    color: var(--accent);
+                }
             }
         }
     }

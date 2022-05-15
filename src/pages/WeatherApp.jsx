@@ -7,6 +7,7 @@ import { checkIsFavorite } from "../store/forecast/weather.slice"
 import { ForecastList } from "../cmps/ForecastList"
 import { SearchBar } from "../cmps/SearchBar"
 import { CityDetails } from "../cmps/CityDetails"
+import { Spinner } from '../cmps/layout/Spinner'
 
 export const WeatherApp = () => {
 
@@ -23,7 +24,7 @@ export const WeatherApp = () => {
         dispatch(checkIsFavorite(currCity.cityId))
     }, [])
 
-    if (isLoading) return <div>Loading...</div>
+    if (isLoading) return <Spinner />
 
     const currCityWithWeather = { ...currCity, ...currWeather }
 

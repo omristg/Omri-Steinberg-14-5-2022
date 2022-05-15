@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { CityDetails } from "../cmps/CityDetails";
 
 import { getFavorites } from "../store/favorite/favorite.slice";
+import { Spinner } from '../cmps/layout/Spinner'
 
 export const FavoriteList = () => {
 
@@ -13,8 +14,8 @@ export const FavoriteList = () => {
         dispatch(getFavorites())
     }, [dispatch])
 
-    if (isLoading) return <div>Loading...</div>
-    if (!favorites.length) return <div>No favorites yet...</div>
+    if (isLoading) return <Spinner />
+    if (!favorites.length) return <div className="no-favorites">No favorites saved...</div>
 
     return (
         <div className="favorites-list">

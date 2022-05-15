@@ -15,7 +15,7 @@ export const SearchBar = () => {
     const [cityOptions, setCityOptions] = useState([])
     const [selectedCityIdx, setSelectedCityIdx] = useState(0)
     const [isInvalid, setisInvalid] = useState(false)
-    const debouncedValue = useDebounce(searchVal, 300)
+    const debouncedValue = useDebounce(searchVal, 200)
 
     const dispatch = useDispatch()
 
@@ -36,11 +36,11 @@ export const SearchBar = () => {
         if (regex.test(searchVal)) setisInvalid(false)
         else setisInvalid(true)
     }, [searchVal])
+
     const resetSearch = () => {
         setSearchVal('')
         setCityOptions([])
     }
-
 
     const handleKeyPress = (ev) => {
         if (!cityOptions.length) return
