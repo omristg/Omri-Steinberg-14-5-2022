@@ -16,7 +16,8 @@ const CITY_SEARCH_END_POINT = '/locations/v1/cities/search'
 export const weatherService = {
     getCityData,
     getCurrConditions,
-    getForecast
+    getForecast,
+    runAutoComplete
 }
 
 async function getCityData(searchVal) {
@@ -54,6 +55,25 @@ async function getForecast(cityId = TEL_AVIV_CITY_KEY) {
     try {
         const { data } = await axios.get(`${BASE_URL}${FIVE_DAYS_FORECAST_END_POINT}${cityId}?apikey=${API_KEY}`)
         return data.DailyForecasts
+    } catch (err) {
+        throw err
+    }
+}
+
+async function runAutoComplete(query) {
+    if (!query) return
+    const params = new URLSearchParams({
+        q: query,
+        apikey: API_KEY
+    })
+    try {
+        const { data } = await axios.get(`${BASE_URL}${AUTO_COMPLETE_END_POINT}`, { params })
+        const options = data?.map(option => ({
+            cityId: option.Key,
+            cityName: option.LocalizedName,
+            countryName: option.Country.LocalizedName,
+        }))
+        return options
     } catch (err) {
         throw err
     }

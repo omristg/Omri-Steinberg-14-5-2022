@@ -1,10 +1,10 @@
 
 export const ForecastPreview = ({ forecast }) => {
 
-    const { Day: day, Temperature: temp } = forecast
-    const { Icon: icon } = day
+    const { Day, Temperature } = forecast
+    const { Icon } = Day
     const dateString = forecast.Date
-    const imgUrl = `http://vortex.accuweather.com/adc2010/images/slate/icons/${icon}.svg`
+    const imgUrl = `http://vortex.accuweather.com/adc2010/images/slate/Icons/${Icon}.svg`
 
     const formattedDate = (dateString) => {
         return new Date(dateString).toLocaleDateString('he-IL')
@@ -12,11 +12,12 @@ export const ForecastPreview = ({ forecast }) => {
 
     const shortenedDay = (dateString) => {
         const newDate = new Date(dateString)
-        const options = { weekday: 'short' }
-        return new Intl.DateTimeFormat('en-US', options).format(newDate)
+        const res = new Intl.DateTimeFormat('en-US', { weekday: 'short' }).format(newDate)
+        console.log('res:', res);
+        return res
     }
 
-    const tempUnit = () => {
+    const TemperatureUnit = () => {
         return 'C'
     }
 
@@ -28,16 +29,16 @@ export const ForecastPreview = ({ forecast }) => {
             </div>
             <div className="details">
                 <div className="weather-desc">
-                    <span>{day.IconPhrase}</span>
+                    <span>{Day.IconPhrase}</span>
                 </div>
                 <div className="temps">
                     <div >
                         <span className="title">Max:</span>
-                        <span>{temp.Maximum.Value}  &deg;{tempUnit()}</span>
+                        <span>{Temperature.Maximum.Value}  &deg;{TemperatureUnit()}</span>
                     </div>
                     <div >
                         <span className="title">Min:</span>
-                        <span>{temp.Minimum.Value}  &deg;{tempUnit()}</span>
+                        <span>{Temperature.Minimum.Value}  &deg;{TemperatureUnit()}</span>
                     </div>
                 </div>
                 <div className="date">{formattedDate(dateString)}</div>

@@ -1,0 +1,28 @@
+.data-list {
+    position: absolute;
+    z-index: 10;
+    top: 2.5rem;
+    width: 15rem;
+    font-size: 0.8rem;
+    background-color: var(--bg-color);
+    border-radius: 1rem;
+    > * {
+        padding: 0.5rem 0.8rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        &:hover {
+            background-color: var(--accent);
+            cursor: pointer;
+        }
+    }
+    :first-child {
+        border-top-left-radius: 1rem;
+        border-top-right-radius: 1rem;
+    }
+    :last-child {
+        border-bottom-left-radius: 1rem;
+        border-bottom-right-radius: 1rem;
+    }
+}

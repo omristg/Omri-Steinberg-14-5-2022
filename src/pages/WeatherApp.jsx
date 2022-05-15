@@ -5,6 +5,7 @@ import { weatherService } from "../store/forecast/weather.service"
 import { getForecastAndCurrWeather } from "../store/forecast/weather.slice"
 
 import { ForecastList } from "../cmps/ForecastList"
+import { SearchBar } from "../cmps/SearchBar"
 
 export const WeatherApp = () => {
 
@@ -21,6 +22,7 @@ export const WeatherApp = () => {
 
     return (
         <div className="weather-app">
+            <SearchBar />
             <ForecastList />
         </div>
     )

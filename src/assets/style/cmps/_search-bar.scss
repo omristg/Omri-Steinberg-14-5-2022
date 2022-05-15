@@ -1,0 +1,29 @@
+.search-bar {
+    width: 100%;
+    display: grid;
+    place-items: center;
+    margin-bottom: 1.5rem;
+
+    .container {
+        position: relative;
+        .search-input {
+            width: 2rem;
+            font-family: Montserrat, sans-serif;
+            border-radius: 20rem;
+            border: none;
+            font-size: 1rem;
+            padding: 0.4rem 0.8rem;
+            transition: width 0.2s;
+
+            &.open {
+                width: 15rem;
+            }
+        }
+        .search-icon {
+            position: absolute;
+            right: 0.6rem;
+            bottom: 50%;
+            transform: translateY(50%);
+        }
+    }
+}
