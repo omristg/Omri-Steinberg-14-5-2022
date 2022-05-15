@@ -45,7 +45,6 @@ async function getCurrConditions(cityId = TEL_AVIV_CITY_KEY) {
     return {
         dateString: currCondition.LocalObservationDateTime,
         temp: currCondition.Temperature.Metric.Value,
-        isDayTime: currCondition.IsDayTime,
         icon: currCondition.WeatherIcon,
         weatherDesc: currCondition.WeatherText
     }

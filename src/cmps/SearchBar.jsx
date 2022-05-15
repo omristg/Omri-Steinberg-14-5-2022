@@ -42,14 +42,15 @@ export const SearchBar = () => {
         setCityOptions([])
     }
 
-    const handleKeyPress = (ev) => {
+    const handleKeyPress = ({ key }) => {
         if (!cityOptions.length) return
-        else if (ev.key === 'Enter') handleEnterPress()
-        else if (ev.key !== 'ArrowDown' && ev.key !== 'ArrowUp') return
+        else if (key === 'Enter') handleEnterPress()
+        else if (key === 'Escape') setCityOptions([])
+        else if (key !== 'ArrowDown' && key !== 'ArrowUp') return
 
-        else if ((ev.key === 'ArrowDown' || ev.key === 'ArrowUp') && selectedCityIdx === null) setSelectedCityIdx(0)
-        else if (ev.key === 'ArrowDown' && selectedCityIdx < cityOptions.length - 1) setSelectedCityIdx(selectedCityIdx + 1)
-        else if (ev.key === 'ArrowUp' && selectedCityIdx > 0) setSelectedCityIdx(selectedCityIdx - 1)
+        else if ((key === 'ArrowDown' || key === 'ArrowUp') && selectedCityIdx === null) setSelectedCityIdx(0)
+        else if (key === 'ArrowDown' && selectedCityIdx < cityOptions.length - 1) setSelectedCityIdx(selectedCityIdx + 1)
+        else if (key === 'ArrowUp' && selectedCityIdx > 0) setSelectedCityIdx(selectedCityIdx - 1)
     }
 
     const handleEnterPress = () => {

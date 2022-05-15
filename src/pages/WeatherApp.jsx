@@ -22,7 +22,7 @@ export const WeatherApp = () => {
 
     useEffect(() => {
         dispatch(checkIsFavorite(currCity.cityId))
-    }, [])
+    }, [dispatch, currCity])
 
     if (isLoading) return <Spinner />
 

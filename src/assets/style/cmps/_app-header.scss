@@ -11,7 +11,16 @@
     background-color: $bgColor;
     color: $textColor;
     .logo {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 0.5rem;
         cursor: pointer;
+
+        .app-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+        }
     }
 
     nav {

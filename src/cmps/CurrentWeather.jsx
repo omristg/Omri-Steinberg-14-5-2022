@@ -2,7 +2,7 @@
 export const CurrentWeather = ({ city }) => {
 
 
-    const { temp, dateString, weatherDesc, icon, isDayTime } = city
+    const { temp, dateString, weatherDesc, icon } = city
     const imgUrl = `http://vortex.accuweather.com/adc2010/images/slate/Icons/${icon}.svg`
 
     const formattedTime = (dateString) => {
