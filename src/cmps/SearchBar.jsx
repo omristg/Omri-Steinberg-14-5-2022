@@ -64,7 +64,6 @@ export const SearchBar = () => {
 
     const dispatchCity = (city) => {
         if (isInvalid) return
-        console.log(city);
         resetSearch()
         dispatch(setCurrCity(city))
         dispatch(getForecastAndCurrWeather(city.cityId))

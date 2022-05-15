@@ -9,8 +9,7 @@ import { CityDetails } from "../cmps/CityDetails"
 
 export const WeatherApp = () => {
 
-    const { currCity, forecasts, currGeoLocCity, isLoading, isError } = useSelector(({ weatherModule }) => weatherModule)
-
+    const { currCity, currWeather, forecasts, currGeoLocCity, isLoading, isError } = useSelector(({ weatherModule }) => weatherModule)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -21,10 +20,12 @@ export const WeatherApp = () => {
 
     if (isLoading) return <div>Loading...</div>
 
+    const currCityWithWeather = { ...currCity, ...currWeather }
+
     return (
         <div className="weather-app">
             <SearchBar />
-            <CityDetails currCity={currCity} />
+            <CityDetails city={currCityWithWeather} isFavorites={false} />
             <ForecastList forecasts={forecasts} />
         </div>
     )

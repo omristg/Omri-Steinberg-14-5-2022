@@ -1,10 +1,8 @@
-import { useSelector } from "react-redux"
 
-export const CurrentWeather = () => {
+export const CurrentWeather = ({ city }) => {
 
-    const { currWeather, } = useSelector(({ weatherModule }) => weatherModule)
 
-    const { temp, dateString, weatherDesc, icon, isDayTime } = currWeather
+    const { temp, dateString, weatherDesc, icon, isDayTime } = city
     const imgUrl = `http://vortex.accuweather.com/adc2010/images/slate/Icons/${icon}.svg`
 
     const formattedTime = (dateString) => {

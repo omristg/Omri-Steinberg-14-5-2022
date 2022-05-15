@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import { AppHeader } from "./cmps/AppHeader"
-import { Favorites } from "./pages/Favorites"
+import { FavoriteList } from "./pages/FavoriteList"
 import { WeatherApp } from "./pages/WeatherApp"
 
 export const RootCmp = () => {
@@ -10,7 +10,7 @@ export const RootCmp = () => {
             <AppHeader />
             <Routes>
                 <Route index element={<WeatherApp />} />
-                <Route path="/favorites" element={<Favorites />} />
+                <Route path="/favorites" element={<FavoriteList />} />
             </Routes>
         </Router>
     )
