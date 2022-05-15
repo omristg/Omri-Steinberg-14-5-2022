@@ -1,5 +1,5 @@
 
-export const CurrentWeather = ({ city }) => {
+export const CurrentWeather = ({ city, onNavigate }) => {
 
 
     const { temp, dateString, weatherDesc, icon } = city
@@ -14,7 +14,7 @@ export const CurrentWeather = ({ city }) => {
     }
 
     return (
-        <div className="current-weather">
+        <div className="current-weather" onClick={onNavigate}>
             <div className="img-container">
                 <img src={imgUrl} alt={weatherDesc} />
                 <div className="date">{formattedTime(dateString)}</div>

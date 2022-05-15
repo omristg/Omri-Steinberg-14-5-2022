@@ -49,11 +49,6 @@ export const favoriteSlice = createSlice({
     name: 'favorite',
     initialState,
     reducers: {
-        removeFavorite: (state, action) => {
-            const cityId = action.payload
-            const filteredFavorites = favoriteService.removeFavorite(cityId)
-            state.favorites = filteredFavorites
-        },
 
     },
     extraReducers: (builder) => {
@@ -80,6 +75,8 @@ export const favoriteSlice = createSlice({
     }
 })
 
-export const { } = favoriteSlice.actions
+
+
+
 
 export default favoriteSlice.reducer

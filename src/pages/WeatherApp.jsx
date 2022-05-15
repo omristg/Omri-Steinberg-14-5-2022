@@ -1,8 +1,7 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
-import { getForecastAndCurrWeather } from "../store/forecast/weather.slice"
-import { checkIsFavorite } from "../store/forecast/weather.slice"
+import { getForecastAndCurrWeather, checkIsFavorite } from "../store/forecast/weather.slice"
 
 import { ForecastList } from "../cmps/ForecastList"
 import { SearchBar } from "../cmps/SearchBar"
