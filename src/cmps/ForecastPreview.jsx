@@ -22,7 +22,7 @@ export const ForecastPreview = ({ forecast }) => {
     return (
         <div className="forecast-preview">
             <div className="img-container">
-                <img src={imgUrl} alt="" />
+                <img src={imgUrl} alt={Day.IconPhrase} />
                 <div className="day">{shortenedDay(dateString)}</div>
             </div>
             <div className="details">

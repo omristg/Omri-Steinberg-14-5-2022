@@ -1,12 +1,8 @@
 import { nanoid } from "@reduxjs/toolkit"
-import { useSelector } from "react-redux"
 import { ForecastPreview } from "./ForecastPreview"
 
 
-export const ForecastList = () => {
-
-    const { forecasts } = useSelector(({ weatherModule }) => weatherModule)
-
+export const ForecastList = ({ forecasts }) => {
 
     return (
         <div className="forecast-list">

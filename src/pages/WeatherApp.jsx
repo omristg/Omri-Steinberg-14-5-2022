@@ -1,15 +1,16 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
-import { weatherService } from "../store/forecast/weather.service"
 import { getForecastAndCurrWeather } from "../store/forecast/weather.slice"
 
 import { ForecastList } from "../cmps/ForecastList"
 import { SearchBar } from "../cmps/SearchBar"
+import { CityDetails } from "../cmps/CityDetails"
 
 export const WeatherApp = () => {
 
-    const { currCity, currGeoLocCity, isLoading, isError } = useSelector(({ weatherModule }) => weatherModule)
+    const { currCity, forecasts, currGeoLocCity, isLoading, isError } = useSelector(({ weatherModule }) => weatherModule)
+
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -23,7 +24,8 @@ export const WeatherApp = () => {
     return (
         <div className="weather-app">
             <SearchBar />
-            <ForecastList />
+            <CityDetails currCity={currCity} />
+            <ForecastList forecasts={forecasts} />
         </div>
     )
 }

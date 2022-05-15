@@ -1,11 +1,11 @@
 .forecast-preview {
     background-color: #ffffffc2;
+    box-shadow: 0 3px 10px var(--shadow-color);
     border-radius: 6px;
     display: flex;
     flex-direction: column;
     flex-basis: 100%;
     justify-content: flex-start;
-
     text-align: center;
 
     .img-container {

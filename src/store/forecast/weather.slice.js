@@ -2,14 +2,19 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { weatherService } from './weather.service'
 
 const initialState = {
-    currCity: null,
+    currCity: {
+        cityId: '215854',
+        cityName: 'Tel Aviv',
+        countryName: 'Israel'
+    },
     currGeoLocationCity: null,
     currWeather: null,
     forecasts: [],
-    isLoading: false,
+    isLoading: true,
     isError: false,
     message: ''
 }
+
 
 export const getForecastAndCurrWeather = createAsyncThunk('weather/getForecastAndWeather',
     async (cityId, thunkAPI) => {
@@ -31,11 +36,8 @@ export const weatherSlice = createSlice({
     name: 'weather',
     initialState,
     reducers: {
-        increment: (state) => {
-            state.value += 1
-        },
-        decrement: (state) => {
-
+        setCurrCity: (state, action) => {
+            state.currCity = action.payload
         }
     },
     extraReducers: (builder) => {
@@ -58,6 +60,6 @@ export const weatherSlice = createSlice({
     }
 })
 
-export const { } = weatherSlice.actions
+export const { setCurrCity } = weatherSlice.actions
 
 export default weatherSlice.reducer

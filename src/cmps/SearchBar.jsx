@@ -4,7 +4,7 @@ import { useDebounce } from '../hooks/useDebounce'
 import { useUpdateEffect } from '../hooks/useUpdateEffect'
 
 import { weatherService } from '../store/forecast/weather.service'
-import { getForecastAndCurrWeather } from '../store/forecast/weather.slice'
+import { getForecastAndCurrWeather, setCurrCity } from '../store/forecast/weather.slice'
 
 import { BsSearch } from 'react-icons/bs'
 import { DataList } from './DataList'
@@ -62,11 +62,12 @@ export const SearchBar = () => {
     }, [cityOptions])
 
 
-    const dispatchCity = ({ cityId }) => {
+    const dispatchCity = (city) => {
         if (isInvalid) return
-        console.log(cityId);
+        console.log(city);
         resetSearch()
-        dispatch(getForecastAndCurrWeather(cityId))
+        dispatch(setCurrCity(city))
+        dispatch(getForecastAndCurrWeather(city.cityId))
     }
 
     return (

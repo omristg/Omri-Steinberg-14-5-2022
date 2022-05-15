@@ -1,7 +1,7 @@
 import axios from "axios"
 
 // const API_KEY = process.env.REACT_APP_WEATHER_API_KEY
-const API_KEY = 'S5OwBVJm35KkN51SLFVhsZ4fIB0obOba'
+const API_KEY = '9TNYr6CqicavM7PFr62AiGD8xvcA0JUG'
 const TEL_AVIV_CITY_KEY = '215854'
 
 
@@ -43,11 +43,11 @@ async function getCurrConditions(cityId = TEL_AVIV_CITY_KEY) {
     const { data } = await axios.get(`${BASE_URL}${CURRENT_CONDITIONS_END_POINT}${cityId}?apikey=${API_KEY}`)
     const currCondition = data[0]
     return {
-        timestamp: currCondition.EpochTime,
+        dateString: currCondition.LocalObservationDateTime,
         temp: currCondition.Temperature.Metric.Value,
         isDayTime: currCondition.IsDayTime,
         icon: currCondition.WeatherIcon,
-        text: currCondition.WeatherText
+        weatherDesc: currCondition.WeatherText
     }
 }
 
@@ -68,7 +68,7 @@ async function runAutoComplete(query) {
     })
     try {
         const { data } = await axios.get(`${BASE_URL}${AUTO_COMPLETE_END_POINT}`, { params })
-        const options = data?.map(option => ({
+        const options = data.map(option => ({
             cityId: option.Key,
             cityName: option.LocalizedName,
             countryName: option.Country.LocalizedName,

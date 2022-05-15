@@ -1,0 +1,36 @@
+.current-weather {
+    background-color: #ffffffc2;
+    box-shadow: 0 3px 10px var(--shadow-color);
+    max-width: 18rem;
+    border-radius: 6px;
+    display: flex;
+    justify-content: flex-start;
+    text-align: center;
+    > * {
+        flex-basis: 50%;
+    }
+
+    .img-container {
+        position: relative;
+        padding: 1.5rem;
+        background-color: #c7aa753a;
+        display: grid;
+        place-items: center;
+
+        .date {
+            font-size: 1.2rem;
+            font-weight: 500;
+            position: absolute;
+            left: 10%;
+            top: 7%;
+        }
+    }
+
+    .details {
+        display: grid;
+        place-content: center;
+        .weather-desc {
+            font-weight: 500;
+        }
+    }
+}
