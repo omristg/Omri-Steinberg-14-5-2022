@@ -4,33 +4,44 @@ import { DataList } from './DataList'
 import { weatherService } from '../store/forecast/weather.service'
 import { useDebounce } from '../hooks/useDebounce'
 import { useUpdateEffect } from '../hooks/useUpdateEffect'
+import { useDispatch } from 'react-redux'
+import { getForecastAndCurrWeather } from '../store/forecast/weather.slice'
 
 export const SearchBar = () => {
 
     const [searchVal, setSearchVal] = useState('')
     const [cityOptions, setCityOptions] = useState([])
     const [selectedCityIdx, setSelectedCityIdx] = useState(0)
+    const [isInvalid, setisInvalid] = useState(false)
     const debouncedValue = useDebounce(searchVal, 300)
+
+    const dispatch = useDispatch()
 
     const handleChange = ({ target: { value } }) => {
         setSearchVal(value)
     }
 
     useUpdateEffect(() => {
-        if (!debouncedValue) setCityOptions([]);
+        if (!debouncedValue) return setCityOptions([]);
         (async () => {
             const cityOptions = await weatherService.runAutoComplete(debouncedValue)
             setCityOptions(cityOptions)
         })();
     }, [debouncedValue])
 
+    useEffect(() => {
+        const regex = /^([a-z\s,']*)$/i
+        if (regex.test(searchVal)) setisInvalid(false)
+        else setisInvalid(true)
+    }, [searchVal])
     const resetSearch = () => {
         setSearchVal('')
         setCityOptions([])
     }
 
+
     const handleKeyPress = (ev) => {
-        if (!cityOptions?.length) return
+        if (!cityOptions.length) return
         else if (ev.key === 'Enter') handleEnterPress()
         else if (ev.key !== 'ArrowDown' && ev.key !== 'ArrowUp') return
 
@@ -50,7 +61,10 @@ export const SearchBar = () => {
 
 
     const dispatchCity = ({ cityId }) => {
+        if (isInvalid) return
         console.log(cityId);
+        resetSearch()
+        dispatch(getForecastAndCurrWeather(cityId))
     }
 
     return (
@@ -64,7 +78,7 @@ export const SearchBar = () => {
                     onKeyDownCapture={handleKeyPress}
                 />
                 <BsSearch className="search-icon" />
-                {!!cityOptions?.length && (
+                {!!cityOptions.length && (
                     <DataList
                         cityOptions={cityOptions}
                         resetSearch={resetSearch}
@@ -74,6 +88,9 @@ export const SearchBar = () => {
                     />
                 )}
             </div>
+            {isInvalid && (
+                <div className="invalid-input-msg">Input text is invalid!</div>
+            )}
         </div>
     )
 }

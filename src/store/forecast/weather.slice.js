@@ -27,7 +27,6 @@ export const getForecastAndCurrWeather = createAsyncThunk('weather/getForecastAn
 )
 
 
-
 export const weatherSlice = createSlice({
     name: 'weather',
     initialState,
@@ -59,6 +58,6 @@ export const weatherSlice = createSlice({
     }
 })
 
-export const { increment, decrement, incrementByAmount } = weatherSlice.actions
+export const { } = weatherSlice.actions
 
 export default weatherSlice.reducer
