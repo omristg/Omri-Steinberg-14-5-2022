@@ -1,11 +1,13 @@
-import { BsSearch } from 'react-icons/bs'
 import { useEffect, useState } from "react"
-import { DataList } from './DataList'
-import { weatherService } from '../store/forecast/weather.service'
+import { useDispatch } from 'react-redux'
 import { useDebounce } from '../hooks/useDebounce'
 import { useUpdateEffect } from '../hooks/useUpdateEffect'
-import { useDispatch } from 'react-redux'
+
+import { weatherService } from '../store/forecast/weather.service'
 import { getForecastAndCurrWeather } from '../store/forecast/weather.slice'
+
+import { BsSearch } from 'react-icons/bs'
+import { DataList } from './DataList'
 
 export const SearchBar = () => {
 

@@ -34,7 +34,9 @@
             margin-bottom: 0.5rem;
             > * {
                 display: flex;
-                justify-content: space-evenly;
+                justify-content: space-between;
+                max-width: 90%;
+                margin: auto;
             }
         }
 

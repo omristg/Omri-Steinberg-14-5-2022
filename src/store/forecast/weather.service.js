@@ -53,7 +53,7 @@ async function getCurrConditions(cityId = TEL_AVIV_CITY_KEY) {
 
 async function getForecast(cityId = TEL_AVIV_CITY_KEY) {
     try {
-        const { data } = await axios.get(`${BASE_URL}${FIVE_DAYS_FORECAST_END_POINT}${cityId}?apikey=${API_KEY}`)
+        const { data } = await axios.get(`${BASE_URL}${FIVE_DAYS_FORECAST_END_POINT}${cityId}?apikey=${API_KEY}&metric=true`)
         return data.DailyForecasts
     } catch (err) {
         throw err
