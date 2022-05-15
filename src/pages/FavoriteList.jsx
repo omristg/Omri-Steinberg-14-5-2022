@@ -19,7 +19,7 @@ export const FavoriteList = () => {
     return (
         <div className="favorites-list">
             {favorites.map(city =>
-                <CityDetails key={city.cityId} city={city} isFavorites={true} />
+                <CityDetails key={city.cityId} city={city} isRenderedByFavorites={true} />
             )}
         </div>
     )

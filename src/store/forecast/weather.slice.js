@@ -1,11 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { favoriteService } from '../favorite/favorite.service'
 import { weatherService } from './weather.service'
 
 const initialState = {
     currCity: {
         cityId: '215854',
         cityName: 'Tel Aviv',
-        countryName: 'Israel'
+        countryName: 'Israel',
+        isFavorite: false
     },
     currGeoLocationCity: null,
     currWeather: null,
@@ -38,6 +40,13 @@ export const weatherSlice = createSlice({
     reducers: {
         setCurrCity: (state, action) => {
             state.currCity = action.payload
+        },
+        checkIsFavorite: (state, action) => {
+            const cityId = action.payload
+            const favorites = favoriteService.getFavorites()
+            const isFavorite = favorites.some(favCity => favCity.cityId === cityId)
+            console.log(isFavorite);
+            if (isFavorite) state.currCity.isFavorite = true
         }
     },
     extraReducers: (builder) => {
@@ -60,6 +69,6 @@ export const weatherSlice = createSlice({
     }
 })
 
-export const { setCurrCity } = weatherSlice.actions
+export const { setCurrCity, checkIsFavorite } = weatherSlice.actions
 
 export default weatherSlice.reducer

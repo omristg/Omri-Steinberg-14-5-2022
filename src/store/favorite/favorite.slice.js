@@ -42,7 +42,7 @@ export const favoriteSlice = createSlice({
             const cityToSave = action.payload
             const newFavorites = favoriteService.addFavorite(cityToSave)
             state = newFavorites
-        }
+        },
     },
     extraReducers: (builder) => {
         builder

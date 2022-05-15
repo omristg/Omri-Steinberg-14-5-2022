@@ -2,6 +2,7 @@ import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
 import { getForecastAndCurrWeather } from "../store/forecast/weather.slice"
+import { checkIsFavorite } from "../store/forecast/weather.slice"
 
 import { ForecastList } from "../cmps/ForecastList"
 import { SearchBar } from "../cmps/SearchBar"
@@ -18,6 +19,10 @@ export const WeatherApp = () => {
         })();
     }, [dispatch])
 
+    useEffect(() => {
+        dispatch(checkIsFavorite(currCity.cityId))
+    }, [])
+
     if (isLoading) return <div>Loading...</div>
 
     const currCityWithWeather = { ...currCity, ...currWeather }
@@ -25,7 +30,7 @@ export const WeatherApp = () => {
     return (
         <div className="weather-app">
             <SearchBar />
-            <CityDetails city={currCityWithWeather} isFavorites={false} />
+            <CityDetails city={currCityWithWeather} isRenderedByFavorites={false} />
             <ForecastList forecasts={forecasts} />
         </div>
     )
