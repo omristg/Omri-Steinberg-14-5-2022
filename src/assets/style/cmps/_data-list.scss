@@ -4,7 +4,7 @@
     top: 2.5rem;
     width: 15rem;
     font-size: 0.8rem;
-    background-color: var(--bg-color);
+    background-color: var(--bg-clr);
     border-radius: 1rem;
     > * {
         padding: 0.5rem 0.8rem;
@@ -14,7 +14,7 @@
 
         &:hover,
         &.selected {
-            background-color: var(--accent);
+            background-color: var(--accent-clr);
             cursor: pointer;
         }
     }

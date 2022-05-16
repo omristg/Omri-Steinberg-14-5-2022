@@ -11,18 +11,22 @@ import { Spinner } from '../cmps/layout/Spinner'
 export const WeatherApp = () => {
 
     // eslint-disable-next-line
-    const { currCity, currWeather, forecasts, geoPositionCity, isLoading, isError } = useSelector(({ weatherModule }) => weatherModule)
-    const { isMetric } = useSelector(({ preferencesModule }) => preferencesModule)
+    const { currCity, currWeather, forecasts, isLoading, isError } = useSelector(({ weatherModule }) => weatherModule)
+    const { isMetric, isDarkMode } = useSelector(({ preferencesModule }) => preferencesModule)
     const dispatch = useDispatch()
     const { cityId } = currCity
 
 
     useEffect(() => {
         dispatch(getForecastAndCurrWeather(cityId))
-    }, [dispatch, cityId, isMetric, geoPositionCity])
+    }, [dispatch, cityId, isMetric])
+
+    useEffect(() => {
+        document.body.classList.toggle('dark-mode')
+    }, [isDarkMode])
 
 
-    if (isLoading) return <Spinner />
+    if (isLoading || !currWeather) return <Spinner />
 
     const currCityWithWeather = { ...currCity, ...currWeather }
 

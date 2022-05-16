@@ -8,14 +8,15 @@ html {
     font-family: Montserrat, sans-serif;
     font-size: 20px;
     line-height: 1.5;
-    color: #161616;
 }
 
 body {
     margin: 0;
     padding: 0;
-    background-image: linear-gradient(lightblue, rgb(255, 241, 195));
+    color: var(--text-clr);
+    background-image: var(--bg-gradient);
     background-attachment: fixed;
+    transition: 0.2s ease-in;
 }
 
 img {

@@ -18,18 +18,20 @@ export const AppHeader = () => {
 
     return (
         <div className="app-header">
-            <div className="logo" onClick={onNavigate}>
-                <AppIcon className="app-icon" />
-                <div>Weather App</div>
+            <div className="logo-and-nav">
+                <div className="logo" onClick={onNavigate}>
+                    <AppIcon className="app-icon" />
+                    <div>Weather App</div>
+                </div>
+                <nav>
+                    <NavLink to="/">Weather</NavLink>
+                    <NavLink to="/favorites">Favorites</NavLink>
+                </nav>
             </div>
             <div className="actions">
                 <button onClick={() => dispatch(toggleIsMetric())}>Set Metric</button>
                 <button onClick={() => dispatch(toggleIsDarkMode())}>Set Dark Mode</button>
             </div>
-            <nav>
-                <NavLink to="/">Weather</NavLink>
-                <NavLink to="/favorites">Favorites</NavLink>
-            </nav>
         </div>
     )
 }

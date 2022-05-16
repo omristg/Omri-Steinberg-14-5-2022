@@ -12,11 +12,12 @@ const initialState = {
 
 export const getFavorites = createAsyncThunk('favorite/getFavorites',
     async (_, thunkAPI) => {
+        const { isMetric } = thunkAPI.getState().preferencesModule
         try {
             const favorites = favoriteService.getFavorites()
             const favsWithWeather = await Promise.all(
                 favorites.map(async (city) => {
-                    const weather = await weatherService.getCurrConditions(city.cityId)
+                    const weather = await weatherService.getCurrConditions(city.cityId, isMetric)
                     return { ...city, ...weather }
                 })
             )

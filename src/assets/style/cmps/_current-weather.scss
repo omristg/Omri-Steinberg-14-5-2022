@@ -1,6 +1,7 @@
 .current-weather {
-    background-color: #ffffffc2;
-    box-shadow: 0 3px 10px var(--shadow-color);
+    // background-color: #ffffffc2;
+    background-color: var(--bg-clr);
+    box-shadow: 0 3px 10px var(--shadow-clr);
     max-width: 18rem;
     border-radius: 6px;
     display: flex;
@@ -13,7 +14,7 @@
     .img-container {
         position: relative;
         padding: 1.5rem;
-        background-color: #c7aa753a;
+        background-color: var(--card-header-clr);
         display: grid;
         place-items: center;
 

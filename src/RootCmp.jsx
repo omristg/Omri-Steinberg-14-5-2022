@@ -19,6 +19,7 @@ export const RootCmp = () => {
             dispatch(setGeoPositionCity(geoPosition))
         })
     }, [dispatch])
+
     return (
         <Router>
             <AppHeader />

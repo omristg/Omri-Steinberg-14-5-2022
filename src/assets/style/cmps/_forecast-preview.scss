@@ -1,6 +1,6 @@
 .forecast-preview {
-    background-color: #ffffffc2;
-    box-shadow: 0 3px 10px var(--shadow-color);
+    background-color: var(--bg-clr);
+    box-shadow: 0 3px 10px var(--shadow-clr);
     border-radius: 6px;
     display: flex;
     flex-direction: column;
@@ -11,7 +11,7 @@
     .img-container {
         position: relative;
         padding: 1.5rem;
-        background-color: #c7aa753a;
+        background-color: var(--card-header-clr);
         .day {
             position: absolute;
             right: 5%;

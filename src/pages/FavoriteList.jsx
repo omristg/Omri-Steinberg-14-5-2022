@@ -8,11 +8,12 @@ import { Spinner } from '../cmps/layout/Spinner'
 export const FavoriteList = () => {
 
     const { favorites, isLoading } = useSelector(({ favoriteModule }) => favoriteModule)
+    const { isMetric } = useSelector(({ preferencesModule }) => preferencesModule)
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(getFavorites())
-    }, [dispatch])
+    }, [dispatch, isMetric])
 
     if (isLoading) return <Spinner />
     if (!favorites.length) return <div className="no-favorites">No favorites saved...</div>

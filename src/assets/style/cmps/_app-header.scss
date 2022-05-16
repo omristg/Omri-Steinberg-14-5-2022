@@ -1,15 +1,20 @@
 .app-header {
-    $textColor: white;
-    $bgColor: #202020;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     padding-inline: var(--layout-padding);
     padding-block: 2rem;
-    box-shadow: 0 3px 10px var(--shadow-color);
+    box-shadow: 0 3px 10px var(--shadow-clr);
     margin-bottom: 1.5rem;
-    background-color: $bgColor;
-    color: $textColor;
+    background-color: var(--header-bg-clr);
+    font-size: 1.2rem;
+    font-weight: 500;
+
+    .logo-and-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-grow: 1;
+    }
 
     .logo {
         display: flex;
@@ -35,13 +40,13 @@
                 content: "|";
                 position: absolute;
                 left: calc(var(--nav-margin) / 2 * -1);
-                color: $textColor;
+                color: var(--text-clr);
                 pointer-events: none;
             }
         }
 
         .active {
-            color: var(--accent);
+            color: var(--accent-clr);
         }
     }
 }
