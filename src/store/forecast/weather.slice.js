@@ -10,7 +10,7 @@ const initialState = {
         countryName: 'Israel',
         isFavorite: false
     },
-    currGeoLocationCity: null,
+    isByGeoPosition: true,
     currWeather: null,
     forecasts: [],
     isLoading: true,
@@ -35,6 +35,12 @@ export const getForecastAndCurrWeather = createAsyncThunk('weather/getForecastAn
     }
 )
 
+export const setGeoPositionCity = createAsyncThunk('weather/setGeoPositionCity',
+    async (geoPosition, thunkAPI) => {
+        const cityData = await weatherService.getCityByGeoPosition(geoPosition)
+        thunkAPI.dispatch(setCurrCity(cityData))
+    }
+)
 
 export const weatherSlice = createSlice({
     name: 'weather',
@@ -51,6 +57,9 @@ export const weatherSlice = createSlice({
         },
         setIsFavorite: (state, action) => {
             state.currCity.isFavorite = action.payload
+        },
+        setIsByGeoPosition: (state, action) => {
+            state.isByGeoPosition = action.payload
         }
     },
     extraReducers: (builder) => {
@@ -72,6 +81,6 @@ export const weatherSlice = createSlice({
     }
 })
 
-export const { setCurrCity, checkIsFavorite, setIsFavorite } = weatherSlice.actions
+export const { setCurrCity, checkIsFavorite, setIsFavorite, setIsByGeoPosition } = weatherSlice.actions
 
 export default weatherSlice.reducer

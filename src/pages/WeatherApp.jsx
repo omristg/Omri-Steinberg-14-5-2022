@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
-import { getForecastAndCurrWeather, checkIsFavorite } from "../store/forecast/weather.slice"
+import { getForecastAndCurrWeather, checkIsFavorite, setGeoPositionCity } from "../store/forecast/weather.slice"
 
 import { ForecastList } from "../cmps/ForecastList"
 import { SearchBar } from "../cmps/SearchBar"
@@ -10,18 +10,26 @@ import { Spinner } from '../cmps/layout/Spinner'
 
 export const WeatherApp = () => {
 
-    const { currCity, currWeather, forecasts, currGeoLocCity, isLoading, isError } = useSelector(({ weatherModule }) => weatherModule)
+    // eslint-disable-next-line
+    const { currCity, currWeather, forecasts, isByGeoPosition, isLoading, isError } = useSelector(({ weatherModule }) => weatherModule)
     const dispatch = useDispatch()
 
     useEffect(() => {
-        (async () => {
-            dispatch(getForecastAndCurrWeather())
-        })();
-    }, [dispatch])
+        if (!isByGeoPosition) return
+        navigator.geolocation.getCurrentPosition((position) => {
+            const geoPosition = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            }
+            dispatch(setGeoPositionCity(geoPosition))
+        })
+    }, [dispatch, isByGeoPosition])
 
     useEffect(() => {
         dispatch(checkIsFavorite(currCity.cityId))
+        dispatch(getForecastAndCurrWeather(currCity.cityId))
     }, [dispatch, currCity])
+
 
     if (isLoading) return <Spinner />
 

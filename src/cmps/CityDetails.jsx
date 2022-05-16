@@ -3,9 +3,9 @@ import { useDispatch } from 'react-redux'
 
 import { CurrentWeather } from './CurrentWeather'
 import { addFavorite, removeFavorite } from '../store/favorite/favorite.slice'
+import { setCurrCity, setIsByGeoPosition } from '../store/forecast/weather.slice'
 
 import { MdOutlineFavoriteBorder, MdFavorite } from 'react-icons/md'
-import { setCurrCity } from '../store/forecast/weather.slice'
 
 export const CityDetails = ({ city, isRenderedByFavorites }) => {
 
@@ -15,6 +15,7 @@ export const CityDetails = ({ city, isRenderedByFavorites }) => {
 
     const onNavigate = () => {
         if (!isRenderedByFavorites) return
+        dispatch(setIsByGeoPosition(false))
         dispatch(setCurrCity(city))
         navigate('/')
     }
