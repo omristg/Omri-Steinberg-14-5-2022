@@ -18,29 +18,27 @@ export const AppHeader = () => {
         navigate('/')
     }
 
-    const handleSwitch = () => {
-        dispatch(toggleIsDarkMode())
-    }
-
-
-
     return (
-        <div className="app-header">
-            <div className="logo-and-nav">
-                <div className="logo" onClick={onNavigate}>
-                    <AppIcon className="app-icon" />
-                    <div>Weather App</div>
-                </div>
+        <header className="app-header">
+            <div className="logo" onClick={onNavigate}>
+                <AppIcon className="app-icon" />
+                <div>Weather App</div>
+            </div>
+            <div className="nav-and-actions">
                 <nav>
                     <NavLink to="/">Weather</NavLink>
                     <NavLink to="/favorites">Favorites</NavLink>
                 </nav>
+                <div className="preferences">
+                    <div
+                        className="metric-btn"
+                        onClick={() => dispatch(toggleIsMetric())}
+                    >
+                        {isMetric ? 'C' : 'F'}&deg;
+                    </div>
+                    <DarkModeSwitch handleSwitch={() => dispatch(toggleIsDarkMode())} />
+                </div>
             </div>
-            <div className="actions">
-                <span onClick={() => dispatch(toggleIsMetric())}>{isMetric ? 'F' : 'C'}</span>
-                {/* <button onClick={() => dispatch(toggleIsDarkMode())}>Set Dark Mode</button> */}
-                <DarkModeSwitch handleSwitch={handleSwitch} />
-            </div>
-        </div>
+        </header>
     )
 }

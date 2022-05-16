@@ -1,5 +1,6 @@
 .app-header {
     display: flex;
+    justify-content: space-between;
     align-items: center;
     padding-inline: var(--layout-padding);
     padding-block: 2rem;
@@ -8,13 +9,6 @@
     background-color: var(--header-bg-clr);
     font-size: 1.2rem;
     font-weight: 500;
-
-    .logo-and-nav {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-grow: 1;
-    }
 
     .logo {
         display: flex;
@@ -29,25 +23,46 @@
         }
     }
 
-    nav {
+    .nav-and-actions {
+        display: none;
         display: flex;
+        align-items: center;
 
-        > *:not(:first-child) {
-            --nav-margin: 2rem;
-            margin-inline-start: var(--nav-margin);
-            position: relative;
+        nav {
+            display: flex;
 
-            &:before {
-                content: "|";
-                position: absolute;
-                left: calc(var(--nav-margin) / 2 * -1);
-                color: var(--text-clr);
-                pointer-events: none;
+            > * {
+                --nav-margin: 2rem;
+                margin-inline-end: var(--nav-margin);
+                position: relative;
+                transition: color 0.1s ease-in-out;
+
+                &::after {
+                    content: "|";
+                    position: absolute;
+                    right: calc(var(--nav-margin) / 2 * -1);
+                    color: var(--text-clr);
+                    pointer-events: none;
+                }
+                &.active,
+                &:hover {
+                    color: var(--accent-clr);
+                }
             }
         }
 
-        .active {
-            color: var(--accent-clr);
+        .preferences {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            .metric-btn {
+                cursor: pointer;
+                transition: color 0.1s ease-in-out;
+
+                &:hover {
+                    color: var(--accent-clr);
+                }
+            }
         }
     }
 }

@@ -10,6 +10,8 @@ import { Spinner } from '../cmps/layout/Spinner'
 
 export const WeatherApp = () => {
 
+    console.log('render');
+
     // eslint-disable-next-line
     const { currCity, currWeather, forecasts, isLoading, isError } = useSelector(({ weatherModule }) => weatherModule)
     const { isMetric } = useSelector(({ preferencesModule }) => preferencesModule)
