@@ -15,10 +15,6 @@ export const ForecastPreview = ({ forecast }) => {
         return new Intl.DateTimeFormat('en-US', { weekday: 'short' }).format(newDate)
     }
 
-    const temperatureUnit = () => {
-        return 'C'
-    }
-
     return (
         <div className="forecast-preview">
             <div className="img-container">
@@ -32,11 +28,11 @@ export const ForecastPreview = ({ forecast }) => {
                 <div className="temps">
                     <div >
                         <span className="title">Max:</span>
-                        <span>{Temperature.Maximum.Value}  &deg;{temperatureUnit()}</span>
+                        <span>{Temperature.Maximum.Value}&deg;{Temperature.Maximum.Unit}</span>
                     </div>
                     <div >
                         <span className="title">Min:</span>
-                        <span>{Temperature.Minimum.Value}  &deg;{temperatureUnit()}</span>
+                        <span>{Temperature.Minimum.Value}&deg;{Temperature.Minimum.Unit}</span>
                     </div>
                 </div>
                 <div className="date">{formattedDate(dateString)}</div>

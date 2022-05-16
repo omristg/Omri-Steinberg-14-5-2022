@@ -1,60 +1,52 @@
 import axios from "axios"
 
 // const API_KEY = process.env.REACT_APP_WEATHER_API_KEY
-const API_KEY = 'oDQqPASE8wp72O7yoI7h3WPAkMwdbUFD'
+const API_KEY = 'usZ4iH5iILCNuTF3QWjN93qaIlqpZOFV'
 const TEL_AVIV_CITY_KEY = '215854'
-
-
-const BASE_URL = 'http://dataservice.accuweather.com'
 
 // End Points
 const CURRENT_CONDITIONS_END_POINT = '/currentconditions/v1/'
 const FIVE_DAYS_FORECAST_END_POINT = '/forecasts/v1/daily/5day/'
 const AUTO_COMPLETE_END_POINT = '/locations/v1/cities/autocomplete'
-const CITY_SEARCH_END_POINT = '/locations/v1/cities/search'
 const GEOPOSITION_END_POINT = '/locations/v1/cities/geoposition/search'
 
+const accuWeather = axios.create({
+    baseURL: 'http://dataservice.accuweather.com',
+    params: {
+        apikey: API_KEY
+    }
+})
+
 export const weatherService = {
-    // getCityData,
     getCurrConditions,
     getForecast,
     runAutoComplete,
     getCityByGeoPosition
 }
 
-// async function getCityData(searchVal) {
-//     const params = new URLSearchParams({
-//         apikey: API_KEY,
-//         q: searchVal
-//     })
-//     try {
-//         const { data } = await axios.get(`${BASE_URL}${CITY_SEARCH_END_POINT}`, { params })
-//         const cityData = data[0]
-//         return {
-//             cityId: cityData.Key,
-//             cityName: cityData.LocalizedName,
-//             countryName: cityData.Country.LocalizedName
-//         }
-//     } catch (err) {
-//         throw err
-//     }
-// }
+async function getCurrConditions(cityId = TEL_AVIV_CITY_KEY, isMetric) {
 
-async function getCurrConditions(cityId = TEL_AVIV_CITY_KEY) {
-
-    const { data } = await axios.get(`${BASE_URL}${CURRENT_CONDITIONS_END_POINT}${cityId}?apikey=${API_KEY}`)
-    const currCondition = data[0]
-    return {
-        dateString: currCondition.LocalObservationDateTime,
-        temp: currCondition.Temperature.Metric.Value,
-        icon: currCondition.WeatherIcon,
-        weatherDesc: currCondition.WeatherText
+    try {
+        const { data } = await accuWeather.get(`${CURRENT_CONDITIONS_END_POINT}${cityId}`)
+        const currCondition = data[0]
+        return {
+            dateString: currCondition.LocalObservationDateTime,
+            temp: isMetric ? currCondition.Temperature.Metric.Value : currCondition.Temperature.Imperial.Value,
+            unit: isMetric ? currCondition.Temperature.Metric.Unit : currCondition.Temperature.Imperial.Unit,
+            icon: currCondition.WeatherIcon,
+            weatherDesc: currCondition.WeatherText
+        }
+    } catch (err) {
+        throw err
     }
 }
 
-async function getForecast(cityId = TEL_AVIV_CITY_KEY) {
+async function getForecast(cityId = TEL_AVIV_CITY_KEY, isMetric) {
+    const params = {
+        metric: isMetric
+    }
     try {
-        const { data } = await axios.get(`${BASE_URL}${FIVE_DAYS_FORECAST_END_POINT}${cityId}?apikey=${API_KEY}&metric=true`)
+        const { data } = await accuWeather.get(`${FIVE_DAYS_FORECAST_END_POINT}${cityId}`, { params })
         return data.DailyForecasts
     } catch (err) {
         throw err
@@ -63,12 +55,11 @@ async function getForecast(cityId = TEL_AVIV_CITY_KEY) {
 
 async function runAutoComplete(query) {
     if (!query) return
-    const params = new URLSearchParams({
+    const params = {
         q: query,
-        apikey: API_KEY
-    })
+    }
     try {
-        const { data } = await axios.get(`${BASE_URL}${AUTO_COMPLETE_END_POINT}`, { params })
+        const { data } = await accuWeather.get(AUTO_COMPLETE_END_POINT, { params })
         const options = data.map(option => ({
             cityId: option.Key,
             cityName: option.LocalizedName,
@@ -82,12 +73,11 @@ async function runAutoComplete(query) {
 
 async function getCityByGeoPosition(geoPosition) {
     const { lat, lng } = geoPosition
-    const params = new URLSearchParams({
-        apikey: API_KEY,
+    const params = {
         q: `${lat},${lng}`
-    })
+    }
     try {
-        const { data } = await axios.get(`${BASE_URL}${GEOPOSITION_END_POINT}`, { params })
+        const { data } = await accuWeather.get(GEOPOSITION_END_POINT, { params })
         return {
             cityId: data.Key,
             cityName: data.LocalizedName,

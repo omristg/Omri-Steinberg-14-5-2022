@@ -29,27 +29,13 @@ export const getFavorites = createAsyncThunk('favorite/getFavorites',
 )
 
 
-export const addFavorite = createAsyncThunk('favorite/addFavorite',
-    (city, { dispatch }) => {
-        dispatch(setIsFavorite(true))
-        const cityToSave = { ...city, isFavorite: true }
-        return favoriteService.addFavorite(cityToSave)
-    }
-)
-
-export const removeFavorite = createAsyncThunk('favorite/removeFavorite',
-    (cityId, { dispatch }) => {
-        dispatch(setIsFavorite(false))
-        return favoriteService.removeFavorite(cityId)
-    }
-)
-
-
 export const favoriteSlice = createSlice({
     name: 'favorite',
     initialState,
     reducers: {
-
+        setFavorites: (state, action) => {
+            state.favorites = action.payload
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -65,18 +51,23 @@ export const favoriteSlice = createSlice({
                 state.favorites = action.payload
                 state.isLoading = false
             })
-            .addCase(addFavorite.fulfilled, (state, action) => {
-                state.favorites = action.payload
-            })
-            .addCase(removeFavorite.fulfilled, (state, action) => {
-                state.favorites = action.payload
-            })
-
     }
 })
 
+export const { setFavorites } = favoriteSlice.actions
 
+export const addFavorite = (city) => (dispatch) => {
+    dispatch(setIsFavorite(true))
+    const cityToSave = { ...city, isFavorite: true }
+    const newFavorites = favoriteService.addFavorite(cityToSave)
+    dispatch(setFavorites(newFavorites))
+}
 
+export const removeFavorite = (cityId) => (dispatch) => {
+    dispatch(setIsFavorite(false))
+    const newFavorites = favoriteService.removeFavorite(cityId)
+    dispatch(setFavorites(newFavorites))
+}
 
 
 export default favoriteSlice.reducer

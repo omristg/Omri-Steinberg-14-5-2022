@@ -13,7 +13,7 @@ const initialState = {
     isByGeoPosition: true,
     currWeather: null,
     forecasts: [],
-    isLoading: true,
+    isLoading: false,
     isError: false,
     message: ''
 }
@@ -21,10 +21,12 @@ const initialState = {
 
 export const getForecastAndCurrWeather = createAsyncThunk('weather/getForecastAndWeather',
     async (cityId, thunkAPI) => {
+        const { isMetric } = thunkAPI.getState().preferencesModule
+        console.log('fetching data');
         try {
             const [currWeather, forecasts] = await Promise.all([
-                weatherService.getCurrConditions(cityId),
-                weatherService.getForecast(cityId)
+                weatherService.getCurrConditions(cityId, isMetric),
+                weatherService.getForecast(cityId, isMetric)
             ])
             thunkAPI.dispatch(checkIsFavorite(cityId))
             return { currWeather, forecasts }

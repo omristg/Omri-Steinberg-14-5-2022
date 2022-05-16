@@ -11,7 +11,7 @@ export const DataList = ({ cityOptions, resetSearch, selectedCityIdx, setSelecte
                     const { cityName, countryName } = city
                     return (
                         <div
-                            className={`${selectedCityIdx === idx && 'selected'} `}
+                            className={selectedCityIdx === idx ? 'selected' : ''}
                             key={nanoid(5)}
                             onClick={() => dispatchCity(city)}
                             onMouseOver={() => setSelectedCityIdx(null)}
