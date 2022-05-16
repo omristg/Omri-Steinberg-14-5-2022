@@ -36,6 +36,7 @@
             --nav-margin: 2rem;
             margin-inline-start: var(--nav-margin);
             position: relative;
+
             &:before {
                 content: "|";
                 position: absolute;

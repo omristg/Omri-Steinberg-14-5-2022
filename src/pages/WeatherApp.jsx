@@ -12,7 +12,7 @@ export const WeatherApp = () => {
 
     // eslint-disable-next-line
     const { currCity, currWeather, forecasts, isLoading, isError } = useSelector(({ weatherModule }) => weatherModule)
-    const { isMetric, isDarkMode } = useSelector(({ preferencesModule }) => preferencesModule)
+    const { isMetric } = useSelector(({ preferencesModule }) => preferencesModule)
     const dispatch = useDispatch()
     const { cityId } = currCity
 
@@ -21,9 +21,7 @@ export const WeatherApp = () => {
         dispatch(getForecastAndCurrWeather(cityId))
     }, [dispatch, cityId, isMetric])
 
-    useEffect(() => {
-        document.body.classList.toggle('dark-mode')
-    }, [isDarkMode])
+
 
 
     if (isLoading || !currWeather) return <Spinner />

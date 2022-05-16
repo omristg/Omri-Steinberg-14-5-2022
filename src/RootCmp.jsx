@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import { AppHeader } from "./cmps/AppHeader"
 import { FavoriteList } from "./pages/FavoriteList"
@@ -8,6 +8,7 @@ import { setGeoPositionCity } from "./store/forecast/weather.slice"
 
 export const RootCmp = () => {
 
+    const { isDarkMode } = useSelector(({ preferencesModule }) => preferencesModule)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -19,6 +20,10 @@ export const RootCmp = () => {
             dispatch(setGeoPositionCity(geoPosition))
         })
     }, [dispatch])
+
+    useEffect(() => {
+        document.body.classList.toggle('dark-mode')
+    }, [isDarkMode])
 
     return (
         <Router>

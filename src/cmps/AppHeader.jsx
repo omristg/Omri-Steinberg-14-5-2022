@@ -1,13 +1,15 @@
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { NavLink, useNavigate } from "react-router-dom"
 
 import { setIsBydefaultCity } from "../store/forecast/weather.slice"
 import { toggleIsMetric, toggleIsDarkMode } from "../store/preferences/preferences.slice"
 
 import { ReactComponent as AppIcon } from "../assets/img/app-icon.svg"
+import { DarkModeSwitch } from "./layout/DarkModeSwitch"
 
 export const AppHeader = () => {
 
+    const { isMetric } = useSelector(({ preferencesModule }) => preferencesModule)
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -15,6 +17,12 @@ export const AppHeader = () => {
         dispatch(setIsBydefaultCity(true))
         navigate('/')
     }
+
+    const handleSwitch = () => {
+        dispatch(toggleIsDarkMode())
+    }
+
+
 
     return (
         <div className="app-header">
@@ -29,8 +37,9 @@ export const AppHeader = () => {
                 </nav>
             </div>
             <div className="actions">
-                <button onClick={() => dispatch(toggleIsMetric())}>Set Metric</button>
-                <button onClick={() => dispatch(toggleIsDarkMode())}>Set Dark Mode</button>
+                <span onClick={() => dispatch(toggleIsMetric())}>{isMetric ? 'F' : 'C'}</span>
+                {/* <button onClick={() => dispatch(toggleIsDarkMode())}>Set Dark Mode</button> */}
+                <DarkModeSwitch handleSwitch={handleSwitch} />
             </div>
         </div>
     )
