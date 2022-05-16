@@ -1,7 +1,6 @@
 
 export const CurrentWeather = ({ city, onNavigate }) => {
 
-
     const { temp, dateString, weatherDesc, icon, unit } = city
     const imgUrl = `http://vortex.accuweather.com/adc2010/images/slate/Icons/${icon}.svg`
 

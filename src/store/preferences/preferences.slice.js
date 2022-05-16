@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    isMetric: false,
+    isMetric: true,
     isDarkMode: false,
 
 }

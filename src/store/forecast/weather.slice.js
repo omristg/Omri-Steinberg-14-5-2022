@@ -10,10 +10,10 @@ const initialState = {
         countryName: 'Israel',
         isFavorite: false
     },
-    isByGeoPosition: true,
+    isByDefaultCity: true,
     currWeather: null,
     forecasts: [],
-    isLoading: false,
+    isLoading: true,
     isError: false,
     message: ''
 }
@@ -22,7 +22,8 @@ const initialState = {
 export const getForecastAndCurrWeather = createAsyncThunk('weather/getForecastAndWeather',
     async (cityId, thunkAPI) => {
         const { isMetric } = thunkAPI.getState().preferencesModule
-        console.log('fetching data');
+        const { currCity, isByDefaultCity } = thunkAPI.getState().weatherModule
+        if (isByDefaultCity) cityId = currCity.cityId
         try {
             const [currWeather, forecasts] = await Promise.all([
                 weatherService.getCurrConditions(cityId, isMetric),
@@ -39,8 +40,13 @@ export const getForecastAndCurrWeather = createAsyncThunk('weather/getForecastAn
 
 export const setGeoPositionCity = createAsyncThunk('weather/setGeoPositionCity',
     async (geoPosition, thunkAPI) => {
-        const cityData = await weatherService.getCityByGeoPosition(geoPosition)
-        thunkAPI.dispatch(setCurrCity(cityData))
+        try {
+            return await weatherService.getCityByGeoPosition(geoPosition)
+        } catch (err) {
+            const msg = err.response?.data?.message || err.message || err.toString()
+            return thunkAPI.rejectWithValue(msg)
+        }
+
     }
 )
 
@@ -60,7 +66,7 @@ export const weatherSlice = createSlice({
         setIsFavorite: (state, action) => {
             state.currCity.isFavorite = action.payload
         },
-        setIsByGeoPosition: (state, action) => {
+        setIsBydefaultCity: (state, action) => {
             state.isByGeoPosition = action.payload
         }
     },
@@ -80,9 +86,21 @@ export const weatherSlice = createSlice({
                 state.forecasts = forecasts
                 state.isLoading = false
             })
+            .addCase(setGeoPositionCity.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(setGeoPositionCity.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(setGeoPositionCity.fulfilled, (state, action) => {
+                state.currCity = action.payload
+                state.isLoading = false
+            })
     }
 })
 
-export const { setCurrCity, checkIsFavorite, setIsFavorite, setIsByGeoPosition } = weatherSlice.actions
+export const { setCurrCity, checkIsFavorite, setIsFavorite, setIsBydefaultCity } = weatherSlice.actions
 
 export default weatherSlice.reducer

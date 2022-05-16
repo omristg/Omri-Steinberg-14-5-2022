@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux"
 import { NavLink, useNavigate } from "react-router-dom"
 
-import { setIsByGeoPosition } from "../store/forecast/weather.slice"
+import { setIsBydefaultCity } from "../store/forecast/weather.slice"
 import { toggleIsMetric, toggleIsDarkMode } from "../store/preferences/preferences.slice"
 
 import { ReactComponent as AppIcon } from "../assets/img/app-icon.svg"
@@ -12,7 +12,7 @@ export const AppHeader = () => {
     const navigate = useNavigate()
 
     const onNavigate = () => {
-        dispatch(setIsByGeoPosition(true))
+        dispatch(setIsBydefaultCity(true))
         navigate('/')
     }
 
