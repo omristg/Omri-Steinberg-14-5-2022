@@ -9,10 +9,12 @@ import { FiMenu } from 'react-icons/fi'
 import { DarkModeSwitch } from "./layout/DarkModeSwitch"
 import { useState } from "react"
 import { Tooltip } from "@mui/material"
+import { Backdrop } from "./layout/Backdrop"
+import { AnimatePresence } from "framer-motion"
 
 export const AppHeader = () => {
 
-    const [isMenuOpen, setIsMenuOpen] = useState(true)
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
     const { isMetric } = useSelector(({ preferencesModule }) => preferencesModule)
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -28,11 +30,17 @@ export const AppHeader = () => {
                 <AppIcon className="app-icon" />
                 <div>Weather App</div>
             </div>
-            {isMenuOpen ? (
-                <div className="backdrop" onClick={() => setIsMenuOpen(false)}></div>
-            ) : (
+
+            <AnimatePresence>
+                {isMenuOpen && (
+                    <Backdrop handleClose={() => setIsMenuOpen(false)} />
+                )}
+            </AnimatePresence>
+
+            {!isMenuOpen && (
                 <FiMenu className="hamburger" onClick={() => setIsMenuOpen(true)} />
             )}
+
             <div className={`nav-and-actions ${isMenuOpen && 'open'}`}>
                 <nav>
                     <NavLink onClick={() => setIsMenuOpen(false)} to="/">Weather</NavLink>

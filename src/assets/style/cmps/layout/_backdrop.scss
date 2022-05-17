@@ -1,0 +1,9 @@
+.backdrop {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    inset: 0;
+    background-color: #57575736;
+    z-index: 100;
+    cursor: pointer;
+}
