@@ -26,8 +26,8 @@ const initialState = {
 export const getForecastAndCurrWeather = createAsyncThunk('weather/getForecastAndWeather',
     async (cityId, thunkAPI) => {
         const { isMetric } = thunkAPI.getState().preferencesModule
-        const { defaultCity, isByDefaultCity } = thunkAPI.getState().weatherModule
-        if (isByDefaultCity) cityId = defaultCity.cityId
+        const { currCity, isByDefaultCity } = thunkAPI.getState().weatherModule
+        if (isByDefaultCity) cityId = currCity.cityId
 
 
         thunkAPI.dispatch(checkIsFavorite(cityId))

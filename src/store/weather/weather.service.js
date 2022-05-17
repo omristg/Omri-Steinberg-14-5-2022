@@ -27,13 +27,15 @@ async function getCurrConditions(cityId, isMetric) {
     try {
         const { data } = await accuWeather.get(`${CURRENT_CONDITIONS_END_POINT}${cityId}`)
         const currCondition = data[0]
-        return {
+        const res = {
             dateString: currCondition.LocalObservationDateTime,
             temp: isMetric ? currCondition.Temperature.Metric.Value : currCondition.Temperature.Imperial.Value,
             unit: isMetric ? currCondition.Temperature.Metric.Unit : currCondition.Temperature.Imperial.Unit,
             icon: currCondition.WeatherIcon,
             weatherDesc: currCondition.WeatherText
         }
+        console.log(res);
+        return res
     } catch (err) {
         throw err
     }
