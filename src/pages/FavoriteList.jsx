@@ -1,9 +1,14 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux"
-import { CityDetails } from "../cmps/CityDetails";
 
-import { getFavorites } from "../store/favorite/favorite.slice";
+import { getFavorites, saveFavorites } from "../store/favorite/favorite.slice";
+
+import { DragDropContext, Droppable } from 'react-beautiful-dnd'
+
+import { FavoritePreview } from "../cmps/FavoritePreview";
 import { Spinner } from '../cmps/layout/Spinner'
+
+
 
 export const FavoriteList = () => {
 
@@ -15,14 +20,29 @@ export const FavoriteList = () => {
         dispatch(getFavorites())
     }, [dispatch, isMetric])
 
+    const handleDrag = (ev) => {
+        const newFavorites = [...favorites]
+        const [srcItem] = newFavorites.splice(ev.source.index, 1)
+        newFavorites.splice(ev.destination.index, 0, srcItem)
+        dispatch(saveFavorites(newFavorites))
+    }
+
     if (isLoading) return <Spinner />
     if (!favorites.length) return <div className="no-favorites">No favorites saved...</div>
 
     return (
-        <div className="favorites-list">
-            {favorites.map(city =>
-                <CityDetails key={city.cityId} city={city} isRenderedByFavorites={true} />
-            )}
-        </div>
+        <DragDropContext onDragEnd={handleDrag}>
+            <Droppable droppableId="favorite-list">
+                {(provided) => (
+                    <div className="favorites-list" {...provided.droppableProps} ref={provided.innerRef}>
+                        {favorites.map((city, idx) =>
+                            <FavoritePreview key={city.cityId} city={city}
+                                isRenderedByFavorites={true} idx={idx} />
+                        )}
+                        {provided.placeholder}
+                    </div>
+                )}
+            </Droppable>
+        </DragDropContext>
     )
 }

@@ -1,3 +1,4 @@
+import ReactDOM from 'react-dom';
 import { motion } from 'framer-motion';
 import { BsShieldExclamation } from 'react-icons/bs'
 import { useConfirm } from '../../hooks/useConfirm';
@@ -10,7 +11,7 @@ export const ConfirmDialog = () => {
 
     if (!isShown) return <></>
 
-    return (
+    return ReactDOM.createPortal(
         <motion.div className="confirm-dialog"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -27,7 +28,7 @@ export const ConfirmDialog = () => {
                     <button className="btn-decline" onClick={onCancel}>No</button>
                 </div>
             </div>
-        </motion.div>
+        </motion.div>, document.getElementById('portal')
     )
 
 }

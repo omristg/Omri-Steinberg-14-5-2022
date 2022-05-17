@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { weatherService } from '../forecast/weather.service'
 import { favoriteService } from './favorite.service'
 import { setIsFavorite } from '../forecast/weather.slice'
+import { toast } from 'react-toastify'
 
 const initialState = {
     favorites: [],
@@ -62,13 +63,19 @@ export const addFavorite = (city) => (dispatch) => {
     const cityToSave = { ...city, isFavorite: true }
     const newFavorites = favoriteService.addFavorite(cityToSave)
     dispatch(setFavorites(newFavorites))
+    toast.success('City added to favorites!')
 }
 
 export const removeFavorite = (cityId) => (dispatch) => {
     dispatch(setIsFavorite(false))
     const newFavorites = favoriteService.removeFavorite(cityId)
     dispatch(setFavorites(newFavorites))
+    toast.success('City removed from favorites!')
 }
 
+export const saveFavorites = (favorites) => (dispatch) => {
+    favoriteService.saveToStrorage(favorites)
+    dispatch(setFavorites(favorites))
+}
 
 export default favoriteSlice.reducer
