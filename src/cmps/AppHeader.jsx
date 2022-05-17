@@ -33,7 +33,7 @@ export const AppHeader = () => {
 
             <AnimatePresence>
                 {isMenuOpen && (
-                    <Backdrop handleClose={() => setIsMenuOpen(false)} />
+                    <Backdrop isClosable={true} handleClose={() => setIsMenuOpen(false)} />
                 )}
             </AnimatePresence>
 

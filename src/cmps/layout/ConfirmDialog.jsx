@@ -17,7 +17,7 @@ export const ConfirmDialog = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.1 }}
         >
-            <Backdrop />
+            <Backdrop isClosable={false} />
             <div className="content">
                 <BsShieldExclamation className="icon" />
                 {text && (
