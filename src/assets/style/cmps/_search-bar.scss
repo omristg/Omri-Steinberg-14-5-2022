@@ -7,7 +7,7 @@
     .container {
         position: relative;
         .search-input {
-            width: 2rem;
+            max-width: 2rem;
             background-color: var(--input-clr);
             color: var(--text-clr);
             font-family: Montserrat, sans-serif;
@@ -19,7 +19,7 @@
             box-shadow: 0 3px 14px var(--shadow-clr);
 
             &.open {
-                width: 15rem;
+                max-width: 15rem;
             }
         }
         .search-icon {

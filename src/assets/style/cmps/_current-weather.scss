@@ -1,8 +1,7 @@
 .current-weather {
-    // background-color: #ffffffc2;
     background-color: var(--bg-clr);
     box-shadow: 0 3px 10px var(--shadow-clr);
-    max-width: 18rem;
+    max-width: 15rem;
     border-radius: 6px;
     display: flex;
     justify-content: flex-start;
@@ -33,5 +32,11 @@
         .weather-desc {
             font-weight: 500;
         }
+    }
+}
+
+@media (min-width: 900px) {
+    .current-weather {
+        max-width: 18rem;
     }
 }

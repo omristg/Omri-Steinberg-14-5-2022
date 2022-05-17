@@ -5,10 +5,13 @@ import { setIsBydefaultCity } from "../store/forecast/weather.slice"
 import { toggleIsMetric, toggleIsDarkMode } from "../store/preferences/preferences.slice"
 
 import { ReactComponent as AppIcon } from "../assets/img/app-icon.svg"
+import { FiMenu } from 'react-icons/fi'
 import { DarkModeSwitch } from "./layout/DarkModeSwitch"
+import { useState } from "react"
 
 export const AppHeader = () => {
 
+    const [isMenuOpen, setIsMenuOpen] = useState(true)
     const { isMetric } = useSelector(({ preferencesModule }) => preferencesModule)
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -24,10 +27,15 @@ export const AppHeader = () => {
                 <AppIcon className="app-icon" />
                 <div>Weather App</div>
             </div>
-            <div className="nav-and-actions">
+            {isMenuOpen ? (
+                <div className="backdrop" onClick={() => setIsMenuOpen(false)}></div>
+            ) : (
+                <FiMenu className="hamburger" onClick={() => setIsMenuOpen(true)} />
+            )}
+            <div className={`nav-and-actions ${isMenuOpen && 'open'}`}>
                 <nav>
-                    <NavLink to="/">Weather</NavLink>
-                    <NavLink to="/favorites">Favorites</NavLink>
+                    <NavLink onClick={() => setIsMenuOpen(false)} to="/">Weather</NavLink>
+                    <NavLink onClick={() => setIsMenuOpen(false)} to="/favorites">Favorites</NavLink>
                 </nav>
                 <div className="preferences">
                     <div

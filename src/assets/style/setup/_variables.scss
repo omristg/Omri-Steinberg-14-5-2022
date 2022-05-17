@@ -9,6 +9,7 @@
     --header-bg-clr: #f5f5f575;
     --input-clr: #ffffff;
     --clr-transition: 0.2s;
+    --backdrop-clr: #57575736;
 }
 
 body.dark-mode {
@@ -19,6 +20,7 @@ body.dark-mode {
     --bg-gradient: linear-gradient(#202020, #1b2d45);
     --header-bg-clr: #20202075;
     --input-clr: #3b3b3b;
+    --backdrop-clr: #57575736;
 }
 
 // background-image: linear-gradient(lightblue, rgb(242 255 228));
