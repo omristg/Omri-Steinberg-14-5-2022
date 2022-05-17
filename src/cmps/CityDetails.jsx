@@ -22,9 +22,14 @@ export const CityDetails = ({ city, isRenderedByFavorites }) => {
         navigate('/')
     }
 
-    const onFav = () => {
-        toast.success('Success')
+    const onAddFavorite = () => {
+        dispatch(addFavorite(city))
+        toast.success('City added to favorites!')
+    }
+
+    const onRemoveFavorite = () => {
         dispatch(removeFavorite(cityId))
+        toast.success('City removed to favorites!')
     }
 
     return (
@@ -33,9 +38,9 @@ export const CityDetails = ({ city, isRenderedByFavorites }) => {
                 <h4 onClick={onNavigate}>{`${cityName}, ${countryName}`}</h4>
                 <div className="favorite-btn">
                     {isFavorite ? (
-                        <MdFavorite onClick={onFav} />
+                        <MdFavorite onClick={onRemoveFavorite} />
                     ) : (
-                        <MdOutlineFavoriteBorder onClick={() => dispatch(addFavorite(city))} />
+                        <MdOutlineFavoriteBorder onClick={onAddFavorite} />
                     )}
                 </div>
             </div>

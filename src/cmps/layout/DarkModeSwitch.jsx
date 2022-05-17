@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
+import { Tooltip, Switch } from '@mui/material';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 
@@ -56,8 +56,11 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 
 export const DarkModeSwitch = ({ handleSwitch }) => {
     return (
-        <FormControlLabel sx={{ m: 0 }}
-            control={<MaterialUISwitch onChange={handleSwitch} />}
-        />
+        <Tooltip title="Switch between dark and light mode"
+            enterDelay={400} leaveDelay={0} arrow placement="bottom-start">
+            <FormControlLabel sx={{ m: 0 }}
+                control={<MaterialUISwitch onChange={handleSwitch} />}
+            />
+        </Tooltip>
     )
 }

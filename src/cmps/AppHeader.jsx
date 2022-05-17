@@ -8,6 +8,7 @@ import { ReactComponent as AppIcon } from "../assets/img/app-icon.svg"
 import { FiMenu } from 'react-icons/fi'
 import { DarkModeSwitch } from "./layout/DarkModeSwitch"
 import { useState } from "react"
+import { Tooltip } from "@mui/material"
 
 export const AppHeader = () => {
 
@@ -38,12 +39,15 @@ export const AppHeader = () => {
                     <NavLink onClick={() => setIsMenuOpen(false)} to="/favorites">Favorites</NavLink>
                 </nav>
                 <div className="preferences">
-                    <div
-                        className="metric-btn"
-                        onClick={() => dispatch(toggleIsMetric())}
-                    >
-                        {isMetric ? 'C' : 'F'}&deg;
-                    </div>
+                    <Tooltip title="Switch between celsius and fahrenheit"
+                        enterDelay={400} leaveDelay={0} arrow placement="bottom-start">
+                        <div
+                            className="metric-btn"
+                            onClick={() => dispatch(toggleIsMetric())}
+                        >
+                            {isMetric ? 'C' : 'F'}&deg;
+                        </div>
+                    </Tooltip>
                     <DarkModeSwitch handleSwitch={() => dispatch(toggleIsDarkMode())} />
                 </div>
             </div>

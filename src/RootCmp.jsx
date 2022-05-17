@@ -40,7 +40,7 @@ export const RootCmp = () => {
                 </Routes>
             </Router>
             <ToastContainer
-                position="top-center"
+                position="bottom-right"
                 autoClose={1500}
                 closeButton={false}
                 hideProgressBar={true}
