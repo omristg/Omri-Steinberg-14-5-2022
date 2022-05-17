@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { weatherService } from '../forecast/weather.service'
 import { favoriteService } from './favorite.service'
-import { setIsFavorite } from '../forecast/weather.slice'
+import { setIsFavorite } from '../weather/weather.slice'
 import { toast } from 'react-toastify'
 
 const initialState = {

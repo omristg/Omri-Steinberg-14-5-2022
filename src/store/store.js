@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import weatherSlice from './forecast/weather.slice';
+import weatherSlice from './weather/weather.slice';
 import favoriteSlice from './favorite/favorite.slice';
 import preferencesSlice from './preferences/preferences.slice';
 

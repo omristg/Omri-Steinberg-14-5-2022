@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import { ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css'
 
-import { setGeoPositionCity } from "./store/forecast/weather.slice"
+import { setGeoPositionCity } from "./store/weather/weather.slice"
 
 import { FavoriteList } from "./pages/FavoriteList"
 import { WeatherApp } from "./pages/WeatherApp"

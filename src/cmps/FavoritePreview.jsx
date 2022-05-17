@@ -4,7 +4,7 @@ import { useConfirm } from '../hooks/useConfirm'
 
 import { CurrentWeather } from './CurrentWeather'
 import { addFavorite, removeFavorite } from '../store/favorite/favorite.slice'
-import { setCurrCity, setIsBydefaultCity } from '../store/forecast/weather.slice'
+import { setCurrCity, setIsByDefaultCity } from '../store/weather/weather.slice'
 
 import { MdOutlineFavoriteBorder, MdFavorite } from 'react-icons/md'
 import { Draggable } from 'react-beautiful-dnd'
@@ -17,7 +17,7 @@ export const FavoritePreview = ({ city, idx }) => {
     const { cityName, countryName, isFavorite, cityId } = city
 
     const onNavigate = () => {
-        dispatch(setIsBydefaultCity(false))
+        dispatch(setIsByDefaultCity(false))
         dispatch(setCurrCity(city))
         navigate('/')
     }

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useDebounce } from '../hooks/useDebounce'
 import { useUpdateEffect } from '../hooks/useUpdateEffect'
 
-import { getForecastAndCurrWeather, setCurrCity, setIsBydefaultCity, setCityOptions, getCityOptions } from '../store/forecast/weather.slice'
+import { getForecastAndCurrWeather, setCurrCity, setIsByDefaultCity, setCityOptions, getCityOptions } from '../store/weather/weather.slice'
 
 import { BsSearch } from 'react-icons/bs'
 import { DataList } from './DataList'
@@ -63,7 +63,7 @@ export const SearchBar = () => {
     const dispatchCity = (city) => {
         if (isInvalid) return
         resetSearch()
-        dispatch(setIsBydefaultCity(false))
+        dispatch(setIsByDefaultCity(false))
         dispatch(setCurrCity(city))
         dispatch(getForecastAndCurrWeather(city.cityId))
     }

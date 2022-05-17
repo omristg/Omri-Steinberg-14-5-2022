@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 import { NavLink, useNavigate } from "react-router-dom"
 
-import { setIsBydefaultCity } from "../store/forecast/weather.slice"
+import { setIsByDefaultCity } from "../store/weather/weather.slice"
 import { toggleIsMetric, toggleIsDarkMode } from "../store/preferences/preferences.slice"
 
 import { ReactComponent as AppIcon } from "../assets/img/app-icon.svg"
@@ -20,8 +20,13 @@ export const AppHeader = () => {
     const navigate = useNavigate()
 
     const onNavigate = () => {
-        dispatch(setIsBydefaultCity(true))
+        dispatch(setIsByDefaultCity(true))
         navigate('/')
+    }
+
+    const onNavLink = () => {
+        dispatch(setIsByDefaultCity(true))
+        setIsMenuOpen(false)
     }
 
     return (
@@ -43,8 +48,8 @@ export const AppHeader = () => {
 
             <div className={`nav-and-actions ${isMenuOpen && 'open'}`}>
                 <nav>
-                    <NavLink onClick={() => setIsMenuOpen(false)} to="/">Weather</NavLink>
-                    <NavLink onClick={() => setIsMenuOpen(false)} to="/favorites">Favorites</NavLink>
+                    <NavLink onClick={onNavLink} to="/">Weather</NavLink>
+                    <NavLink onClick={onNavLink} to="/favorites">Favorites</NavLink>
                 </nav>
                 <div className="preferences">
                     <Tooltip title="Switch between celsius and fahrenheit"

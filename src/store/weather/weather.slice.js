@@ -1,15 +1,18 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { favoriteService } from '../favorite/favorite.service'
+import { cacheService } from './cache.service'
 import { weatherService } from './weather.service'
 
+const DEFAULT_CITY = {
+    cityId: '215854',
+    cityName: 'Tel Aviv',
+    countryName: 'Israel',
+    isFavorite: false
+}
 
 const initialState = {
-    currCity: {
-        cityId: '215854',
-        cityName: 'Tel Aviv',
-        countryName: 'Israel',
-        isFavorite: false
-    },
+    currCity: DEFAULT_CITY,
+    defaultCity: DEFAULT_CITY,
     isByDefaultCity: true,
     currWeather: null,
     forecasts: [],
@@ -23,15 +26,23 @@ const initialState = {
 export const getForecastAndCurrWeather = createAsyncThunk('weather/getForecastAndWeather',
     async (cityId, thunkAPI) => {
         const { isMetric } = thunkAPI.getState().preferencesModule
-        const { currCity, isByDefaultCity } = thunkAPI.getState().weatherModule
-        if (isByDefaultCity) cityId = currCity.cityId
+        const { defaultCity, isByDefaultCity } = thunkAPI.getState().weatherModule
+        if (isByDefaultCity) cityId = defaultCity.cityId
+
+
+        thunkAPI.dispatch(checkIsFavorite(cityId))
+        const cachedCity = cacheService.getByIdIfValid(cityId)
+        if (cachedCity) return cachedCity
+
         try {
             const [currWeather, forecasts] = await Promise.all([
                 weatherService.getCurrConditions(cityId, isMetric),
                 weatherService.getForecast(cityId, isMetric)
             ])
-            thunkAPI.dispatch(checkIsFavorite(cityId))
-            return { currWeather, forecasts }
+            const city = { currWeather, forecasts, cityId }
+            cacheService.upsert(city)
+            return city
+
         } catch (err) {
             const msg = err.response?.data?.message || err.message || err.toString()
             return thunkAPI.rejectWithValue(msg)
@@ -42,7 +53,9 @@ export const getForecastAndCurrWeather = createAsyncThunk('weather/getForecastAn
 export const setGeoPositionCity = createAsyncThunk('weather/setGeoPositionCity',
     async (geoPosition, thunkAPI) => {
         try {
-            return await weatherService.getCityByGeoPosition(geoPosition)
+            const geoPosCity = await weatherService.getCityByGeoPosition(geoPosition)
+            thunkAPI.dispatch(setDefaultCity(geoPosCity))
+            return geoPosCity
         } catch (err) {
             const msg = err.response?.data?.message || err.message || err.toString()
             return thunkAPI.rejectWithValue(msg)
@@ -54,9 +67,7 @@ export const setGeoPositionCity = createAsyncThunk('weather/setGeoPositionCity',
 export const getCityOptions = createAsyncThunk('weather/getCityOptions',
     async (searchVal, thunkAPI) => {
         try {
-            const res = await weatherService.runAutoComplete(searchVal)
-            console.log(res);
-            return res
+            return await weatherService.runAutoComplete(searchVal)
         } catch (err) {
             const msg = err.response?.data?.message || err.message || err.toString()
             return thunkAPI.rejectWithValue(msg)
@@ -80,8 +91,12 @@ export const weatherSlice = createSlice({
         setIsFavorite: (state, action) => {
             state.currCity.isFavorite = action.payload
         },
-        setIsBydefaultCity: (state, action) => {
-            state.isByGeoPosition = action.payload
+        setIsByDefaultCity: (state, action) => {
+            state.isByDefaultCity = action.payload
+            if (action.payload) state.currCity = state.defaultCity
+        },
+        setDefaultCity: (state, action) => {
+            state.defaultCity = action.payload
         },
         setCityOptions: (state, action) => {
             state.cityOptions = action.payload
@@ -129,6 +144,6 @@ export const weatherSlice = createSlice({
     }
 })
 
-export const { setCurrCity, checkIsFavorite, setIsFavorite, setIsBydefaultCity, setCityOptions, resetError } = weatherSlice.actions
+export const { setCurrCity, checkIsFavorite, setIsFavorite, setIsByDefaultCity, setDefaultCity, setCityOptions, resetError } = weatherSlice.actions
 
 export default weatherSlice.reducer

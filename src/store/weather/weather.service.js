@@ -1,8 +1,7 @@
 import axios from "axios"
 
 // const API_KEY = process.env.REACT_APP_WEATHER_API_KEY
-const API_KEY = 'xvxRPVCrfM3UjIILLy8A89Qtj2sU0od7'
-const TEL_AVIV_CITY_KEY = '215854'
+const API_KEY = 'XFtGF1CXBQX6GF3OBhT59hCsueUkVJeL'
 
 // End Points
 const CURRENT_CONDITIONS_END_POINT = '/currentconditions/v1/'
@@ -24,8 +23,7 @@ export const weatherService = {
     getCityByGeoPosition
 }
 
-async function getCurrConditions(cityId = TEL_AVIV_CITY_KEY, isMetric) {
-
+async function getCurrConditions(cityId, isMetric) {
     try {
         const { data } = await accuWeather.get(`${CURRENT_CONDITIONS_END_POINT}${cityId}`)
         const currCondition = data[0]
@@ -41,7 +39,7 @@ async function getCurrConditions(cityId = TEL_AVIV_CITY_KEY, isMetric) {
     }
 }
 
-async function getForecast(cityId = TEL_AVIV_CITY_KEY, isMetric) {
+async function getForecast(cityId, isMetric) {
     const params = {
         metric: isMetric
     }

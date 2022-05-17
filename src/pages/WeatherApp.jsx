@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { toast } from "react-toastify"
 
-import { getForecastAndCurrWeather, resetError } from "../store/forecast/weather.slice"
+import { getForecastAndCurrWeather, resetError } from "../store/weather/weather.slice"
 
 import { ForecastList } from "../cmps/ForecastList"
 import { SearchBar } from "../cmps/SearchBar"
@@ -30,8 +30,6 @@ export const WeatherApp = () => {
         })
         dispatch(resetError())
     }, [dispatch, isError, message])
-
-
 
     if (isLoading || !currWeather) return <Spinner />
 
