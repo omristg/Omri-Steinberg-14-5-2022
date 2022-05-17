@@ -10,7 +10,7 @@ const AUTO_COMPLETE_END_POINT = '/locations/v1/cities/autocomplete'
 const GEOPOSITION_END_POINT = '/locations/v1/cities/geoposition/search'
 
 const accuWeather = axios.create({
-    baseURL: 'http://dataservice.accuweather.com',
+    baseURL: 'https://dataservice.accuweather.com',
     params: {
         apikey: API_KEY
     }
