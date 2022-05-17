@@ -26,5 +26,10 @@
 @import "./cmps/current-weather";
 @import "./cmps/city-details";
 @import "./cmps/favorite-preview";
+
+// Layout
+
 @import "./cmps/layout/spinner";
 @import "./cmps/layout/toast";
+@import "./cmps/layout/confrim-dialog";
+@import "./cmps/layout/backdrop";

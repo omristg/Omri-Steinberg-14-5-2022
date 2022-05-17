@@ -1,6 +1,7 @@
 import { motion } from "framer-motion"
 
-export const Backdrop = ({ handleClose }) => {
+
+export function Backdrop({ handleClose }) {
 
     return (
         <motion.div
@@ -11,4 +12,8 @@ export const Backdrop = ({ handleClose }) => {
             className="backdrop" onClick={handleClose}
         />
     )
+}
+
+Backdrop.defaultProps = {
+    handleClose: null
 }

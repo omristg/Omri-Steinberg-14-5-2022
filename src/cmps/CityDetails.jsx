@@ -7,18 +7,19 @@ import { setCurrCity, setIsBydefaultCity } from '../store/forecast/weather.slice
 
 import { MdOutlineFavoriteBorder, MdFavorite } from 'react-icons/md'
 import { toast } from 'react-toastify'
+import { useConfirm } from '../hooks/useConfirm'
 
 export const CityDetails = ({ city, isRenderedByFavorites }) => {
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const { confirm } = useConfirm();
     const { cityName, countryName, isFavorite, cityId } = city
 
     const onNavigate = () => {
         if (!isRenderedByFavorites) return
         dispatch(setIsBydefaultCity(false))
         dispatch(setCurrCity(city))
-        // toast.error(message)
         navigate('/')
     }
 
@@ -27,9 +28,10 @@ export const CityDetails = ({ city, isRenderedByFavorites }) => {
         toast.success('City added to favorites!')
     }
 
-    const onRemoveFavorite = () => {
+    const onRemoveFavorite = async () => {
+        if (!await confirm('Do you confirm your choice?')) return
         dispatch(removeFavorite(cityId))
-        toast.success('City removed to favorites!')
+        toast.success('City removed from favorites!')
     }
 
     return (

@@ -10,6 +10,7 @@ import { setGeoPositionCity } from "./store/forecast/weather.slice"
 import { FavoriteList } from "./pages/FavoriteList"
 import { WeatherApp } from "./pages/WeatherApp"
 import { AppHeader } from "./cmps/AppHeader"
+import { ConfirmDialog } from "./cmps/layout/ConfirmDialog"
 
 export const RootCmp = () => {
 
@@ -39,6 +40,7 @@ export const RootCmp = () => {
                     <Route path="/favorites" element={<FavoriteList />} />
                 </Routes>
             </Router>
+            <ConfirmDialog />
             <ToastContainer
                 position="bottom-right"
                 autoClose={1500}

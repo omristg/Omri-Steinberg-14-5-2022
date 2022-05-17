@@ -1,0 +1,62 @@
+.confirm-dialog {
+    position: fixed;
+    z-index: 1000;
+
+    .content {
+        position: fixed;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1500;
+        background-color: var(--bg-clr);
+        color: var(--text-clr);
+        box-shadow: 0 2px 15px #00000035;
+        padding: 1rem 2.5rem;
+        border-radius: 4px;
+        font-weight: 600;
+
+        .icon {
+            display: block;
+            margin: 0.25rem auto 1rem;
+            font-size: 2rem;
+            text-align: center;
+            color: #0073ea;
+        }
+
+        p {
+            margin: 0;
+            text-align: center;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            button {
+                color: var(--text-clr);
+                border: 1px solid var(--text-clr);
+                background-color: var(--card-header-clr);
+                border-radius: 4px;
+                padding: 0.3rem 0.7rem;
+                font-size: 1rem;
+                line-height: 1rem;
+                margin: 0.5rem;
+                transition: 0.15s;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: color-mod(var(--card-header-clr) tint(50%));
+                }
+
+                &.btn-accept {
+                    border: 1px solid #0073ea;
+                    color: #0073ea;
+
+                    &:hover {
+                        background-color: #0073ea;
+                        color: white;
+                    }
+                }
+            }
+        }
+    }
+}
