@@ -1,7 +1,6 @@
 import { nanoid } from "@reduxjs/toolkit"
 import { ForecastPreview } from "./ForecastPreview"
 
-
 export const ForecastList = ({ forecasts }) => {
 
     return (

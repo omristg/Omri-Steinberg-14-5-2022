@@ -1,8 +1,8 @@
 import { useDispatch } from 'react-redux'
-import { useConfirm } from '../hooks/useConfirm'
+import { useConfirm } from '../../hooks/useConfirm'
 
-import { CurrentWeather } from './CurrentWeather'
-import { addFavorite, removeFavorite } from '../store/favorite/favorite.slice'
+import { CurrentWeather } from '../shared/CurrentWeather'
+import { addFavorite, removeFavorite } from '../../store/favorite/favorite.slice'
 
 import { MdOutlineFavoriteBorder, MdFavorite } from 'react-icons/md'
 
@@ -12,7 +12,6 @@ export const CityDetails = ({ city }) => {
     const dispatch = useDispatch()
     const { confirm } = useConfirm();
     const { cityName, countryName, isFavorite, cityId } = city
-
 
     const onRemoveFavorite = async () => {
         if (!await confirm('Do you confirm your choice?')) return

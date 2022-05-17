@@ -4,9 +4,9 @@ import { toast } from "react-toastify"
 
 import { getForecastAndCurrWeather, resetError } from "../store/weather/weather.slice"
 
-import { ForecastList } from "../cmps/ForecastList"
+import { ForecastList } from "../cmps/forecast/ForecastList"
 import { SearchBar } from "../cmps/SearchBar"
-import { CityDetails } from "../cmps/CityDetails"
+import { CityDetails } from "../cmps/favorite/CityDetails"
 import { Spinner } from '../cmps/layout/Spinner'
 
 export const WeatherApp = () => {

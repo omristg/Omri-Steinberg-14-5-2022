@@ -1,7 +1,7 @@
 import axios from "axios"
 
 // const API_KEY = process.env.REACT_APP_WEATHER_API_KEY
-const API_KEY = 'XFtGF1CXBQX6GF3OBhT59hCsueUkVJeL'
+const API_KEY = 'j8mE5jvexnk05VSc8AZVDkqD5sbRgjn7'
 
 // End Points
 const CURRENT_CONDITIONS_END_POINT = '/currentconditions/v1/'
@@ -27,15 +27,13 @@ async function getCurrConditions(cityId, isMetric) {
     try {
         const { data } = await accuWeather.get(`${CURRENT_CONDITIONS_END_POINT}${cityId}`)
         const currCondition = data[0]
-        const res = {
+        return {
             dateString: currCondition.LocalObservationDateTime,
             temp: isMetric ? currCondition.Temperature.Metric.Value : currCondition.Temperature.Imperial.Value,
             unit: isMetric ? currCondition.Temperature.Metric.Unit : currCondition.Temperature.Imperial.Unit,
             icon: currCondition.WeatherIcon,
             weatherDesc: currCondition.WeatherText
         }
-        console.log(res);
-        return res
     } catch (err) {
         throw err
     }

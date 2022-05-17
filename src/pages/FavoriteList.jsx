@@ -1,13 +1,11 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux"
+import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 
 import { getFavorites, saveFavorites } from "../store/favorite/favorite.slice";
 
-import { DragDropContext, Droppable } from 'react-beautiful-dnd'
-
-import { FavoritePreview } from "../cmps/FavoritePreview";
+import { FavoritePreview } from "../cmps/favorite/FavoritePreview";
 import { Spinner } from '../cmps/layout/Spinner'
-
 
 
 export const FavoriteList = () => {
@@ -34,10 +32,11 @@ export const FavoriteList = () => {
         <DragDropContext onDragEnd={handleDrag}>
             <Droppable droppableId="favorite-list">
                 {(provided) => (
-                    <div className="favorites-list" {...provided.droppableProps} ref={provided.innerRef}>
+                    <div className="favorites-list"
+                        {...provided.droppableProps} ref={provided.innerRef}
+                    >
                         {favorites.map((city, idx) =>
-                            <FavoritePreview key={city.cityId} city={city}
-                                isRenderedByFavorites={true} idx={idx} />
+                            <FavoritePreview key={city.cityId} city={city} idx={idx} />
                         )}
                         {provided.placeholder}
                     </div>

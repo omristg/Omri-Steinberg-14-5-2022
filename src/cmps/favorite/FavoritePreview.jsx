@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { useConfirm } from '../hooks/useConfirm'
+import { useConfirm } from '../../hooks/useConfirm'
 
-import { CurrentWeather } from './CurrentWeather'
-import { addFavorite, removeFavorite } from '../store/favorite/favorite.slice'
-import { setCurrCity, setIsByDefaultCity } from '../store/weather/weather.slice'
+import { CurrentWeather } from '../shared/CurrentWeather'
+import { addFavorite, removeFavorite } from '../../store/favorite/favorite.slice'
+import { setCurrCity, setIsByDefaultCity } from '../../store/weather/weather.slice'
 
 import { MdOutlineFavoriteBorder, MdFavorite } from 'react-icons/md'
 import { Draggable } from 'react-beautiful-dnd'
@@ -23,7 +23,7 @@ export const FavoritePreview = ({ city, idx }) => {
     }
 
     const onRemoveFavorite = async () => {
-        if (!await confirm('Do you confirm your choice?')) return
+        if (!await confirm('Are you sure you want to delete this?')) return
         dispatch(removeFavorite(cityId))
     }
 
