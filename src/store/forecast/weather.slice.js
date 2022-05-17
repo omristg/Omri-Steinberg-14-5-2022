@@ -13,6 +13,7 @@ const initialState = {
     isByDefaultCity: true,
     currWeather: null,
     forecasts: [],
+    cityOptions: [],
     isLoading: true,
     isError: false,
     message: ''
@@ -50,6 +51,19 @@ export const setGeoPositionCity = createAsyncThunk('weather/setGeoPositionCity',
     }
 )
 
+export const getCityOptions = createAsyncThunk('weather/getCityOptions',
+    async (searchVal, thunkAPI) => {
+        try {
+            const res = await weatherService.runAutoComplete(searchVal)
+            console.log(res);
+            return res
+        } catch (err) {
+            const msg = err.response?.data?.message || err.message || err.toString()
+            return thunkAPI.rejectWithValue(msg)
+        }
+    }
+)
+
 export const weatherSlice = createSlice({
     name: 'weather',
     initialState,
@@ -68,6 +82,13 @@ export const weatherSlice = createSlice({
         },
         setIsBydefaultCity: (state, action) => {
             state.isByGeoPosition = action.payload
+        },
+        setCityOptions: (state, action) => {
+            state.cityOptions = action.payload
+        },
+        resetError: (state) => {
+            state.isError = false
+            state.message = ''
         }
     },
     extraReducers: (builder) => {
@@ -98,9 +119,16 @@ export const weatherSlice = createSlice({
                 state.currCity = action.payload
                 state.isLoading = false
             })
+            .addCase(getCityOptions.rejected, (state, action) => {
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(getCityOptions.fulfilled, (state, action) => {
+                state.cityOptions = action.payload
+            })
     }
 })
 
-export const { setCurrCity, checkIsFavorite, setIsFavorite, setIsBydefaultCity } = weatherSlice.actions
+export const { setCurrCity, checkIsFavorite, setIsFavorite, setIsBydefaultCity, setCityOptions, resetError } = weatherSlice.actions
 
 export default weatherSlice.reducer

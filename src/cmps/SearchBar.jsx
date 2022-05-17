@@ -1,35 +1,33 @@
 import { useEffect, useState } from "react"
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useDebounce } from '../hooks/useDebounce'
 import { useUpdateEffect } from '../hooks/useUpdateEffect'
 
-import { weatherService } from '../store/forecast/weather.service'
-import { getForecastAndCurrWeather, setCurrCity, setIsBydefaultCity } from '../store/forecast/weather.slice'
+import { getForecastAndCurrWeather, setCurrCity, setIsBydefaultCity, setCityOptions, getCityOptions } from '../store/forecast/weather.slice'
 
 import { BsSearch } from 'react-icons/bs'
 import { DataList } from './DataList'
 
 export const SearchBar = () => {
 
+    const { cityOptions } = useSelector(({ weatherModule }) => weatherModule)
+    const dispatch = useDispatch()
+
     const [searchVal, setSearchVal] = useState('')
-    const [cityOptions, setCityOptions] = useState([])
     const [selectedCityIdx, setSelectedCityIdx] = useState(0)
     const [isInvalid, setisInvalid] = useState(false)
     const debouncedValue = useDebounce(searchVal, 200)
 
-    const dispatch = useDispatch()
 
     const handleChange = ({ target: { value } }) => {
         setSearchVal(value)
     }
 
     useUpdateEffect(() => {
-        if (!debouncedValue) return setCityOptions([]);
-        (async () => {
-            const cityOptions = await weatherService.runAutoComplete(debouncedValue)
-            setCityOptions(cityOptions)
-        })();
+        if (!debouncedValue || isInvalid) return dispatch(setCityOptions([]));
+        dispatch(getCityOptions(debouncedValue))
     }, [debouncedValue])
+
 
     useEffect(() => {
         const regex = /^([a-z\s,']*)$/i
@@ -37,9 +35,13 @@ export const SearchBar = () => {
         else setisInvalid(true)
     }, [searchVal])
 
+    useEffect(() => {
+        setSelectedCityIdx(0)
+    }, [cityOptions])
+
     const resetSearch = () => {
         setSearchVal('')
-        setCityOptions([])
+        dispatch(setCityOptions([]))
     }
 
     const handleKeyPress = ({ key }) => {
@@ -57,11 +59,6 @@ export const SearchBar = () => {
         if (selectedCityIdx === null) return
         dispatchCity(cityOptions[selectedCityIdx])
     }
-
-    useEffect(() => {
-        setSelectedCityIdx(0)
-    }, [cityOptions])
-
 
     const dispatchCity = (city) => {
         if (isInvalid) return
@@ -91,10 +88,10 @@ export const SearchBar = () => {
                         setSelectedCityIdx={setSelectedCityIdx}
                     />
                 )}
+                {isInvalid && (
+                    <div className="invalid-input-msg">Input text is invalid!</div>
+                )}
             </div>
-            {isInvalid && (
-                <div className="invalid-input-msg">Input text is invalid!</div>
-            )}
         </div>
     )
 }

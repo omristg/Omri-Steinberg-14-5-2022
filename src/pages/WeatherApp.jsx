@@ -1,7 +1,8 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import { toast } from "react-toastify"
 
-import { getForecastAndCurrWeather } from "../store/forecast/weather.slice"
+import { getForecastAndCurrWeather, resetError } from "../store/forecast/weather.slice"
 
 import { ForecastList } from "../cmps/ForecastList"
 import { SearchBar } from "../cmps/SearchBar"
@@ -11,8 +12,7 @@ import { Spinner } from '../cmps/layout/Spinner'
 export const WeatherApp = () => {
 
 
-    // eslint-disable-next-line
-    const { currCity, currWeather, forecasts, isLoading, isError } = useSelector(({ weatherModule }) => weatherModule)
+    const { currCity, currWeather, forecasts, isLoading, isError, message } = useSelector(({ weatherModule }) => weatherModule)
     const { isMetric } = useSelector(({ preferencesModule }) => preferencesModule)
     const dispatch = useDispatch()
     const { cityId } = currCity
@@ -22,6 +22,14 @@ export const WeatherApp = () => {
         dispatch(getForecastAndCurrWeather(cityId))
     }, [dispatch, cityId, isMetric])
 
+
+    useEffect(() => {
+        if (isError) toast.error(message, {
+            hideProgressBar: false,
+            autoClose: 3000
+        })
+        dispatch(resetError())
+    }, [dispatch, isError, message])
 
 
 

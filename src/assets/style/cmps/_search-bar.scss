@@ -1,11 +1,12 @@
 .search-bar {
-    width: 100%;
     display: grid;
     place-items: center;
+    max-width: 100%;
     margin-bottom: 1.5rem;
 
     .container {
         position: relative;
+        $text-padding-inline: 0.4rem;
         .search-input {
             max-width: 2rem;
             background-color: var(--input-clr);
@@ -27,6 +28,13 @@
             right: 0.6rem;
             bottom: 50%;
             transform: translateY(50%);
+        }
+        .invalid-input-msg {
+            position: absolute;
+            color: red;
+            left: 0;
+            text-align: center;
+            width: 100%;
         }
     }
 }
