@@ -12,8 +12,6 @@ import { WeatherApp } from "./pages/WeatherApp"
 import { AppHeader } from "./cmps/AppHeader"
 import { ConfirmDialog } from "./cmps/layout/ConfirmDialog"
 
-const apikey = process.env.REACT_APP_WEATHER_API_KEY
-console.log(apikey);
 
 export const RootCmp = () => {
 

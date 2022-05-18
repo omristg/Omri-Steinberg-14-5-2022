@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { weatherService } from '../weather/weather.service'
 import { favoriteService } from './favorite.service'
-import { setIsFavorite } from '../weather/weather.slice'
+import { setDefaultIsFavorite, setIsFavorite } from '../weather/weather.slice'
 import { toast } from 'react-toastify'
 
 const initialState = {
@@ -14,8 +14,9 @@ const initialState = {
 export const getFavorites = createAsyncThunk('favorite/getFavorites',
     async (_, thunkAPI) => {
         const { isMetric } = thunkAPI.getState().preferencesModule
+        const favorites = favoriteService.getFavorites()
+
         try {
-            const favorites = favoriteService.getFavorites()
             const favsWithWeather = await Promise.all(
                 favorites.map(async (city) => {
                     const weather = await weatherService.getCurrConditions(city.cityId, isMetric)
@@ -59,6 +60,7 @@ export const favoriteSlice = createSlice({
 export const { setFavorites } = favoriteSlice.actions
 
 export const addFavorite = (city) => (dispatch) => {
+    dispatch(checkIsItDefaultCity(city.cityId, true))
     dispatch(setIsFavorite(true))
     const cityToSave = { ...city, isFavorite: true }
     const newFavorites = favoriteService.addFavorite(cityToSave)
@@ -67,6 +69,7 @@ export const addFavorite = (city) => (dispatch) => {
 }
 
 export const removeFavorite = (cityId) => (dispatch) => {
+    checkIsItDefaultCity(cityId, false)
     dispatch(setIsFavorite(false))
     const newFavorites = favoriteService.removeFavorite(cityId)
     dispatch(setFavorites(newFavorites))
@@ -76,6 +79,11 @@ export const removeFavorite = (cityId) => (dispatch) => {
 export const saveFavorites = (favorites) => (dispatch) => {
     favoriteService.saveToStrorage(favorites)
     dispatch(setFavorites(favorites))
+}
+
+export const checkIsItDefaultCity = (cityId, action) => (dispatch, getState) => {
+    const { defaultCity } = getState().weatherModule
+    if (defaultCity.cityId === cityId) dispatch(setDefaultIsFavorite(action))
 }
 
 export default favoriteSlice.reducer

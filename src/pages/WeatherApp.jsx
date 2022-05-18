@@ -13,14 +13,13 @@ export const WeatherApp = () => {
 
 
     const { currCity, currWeather, forecasts, isLoading, isError, message } = useSelector(({ weatherModule }) => weatherModule)
-    const { isMetric } = useSelector(({ preferencesModule }) => preferencesModule)
     const dispatch = useDispatch()
     const { cityId } = currCity
 
 
     useEffect(() => {
-        dispatch(getForecastAndCurrWeather(cityId))
-    }, [dispatch, cityId, isMetric])
+        dispatch(getForecastAndCurrWeather({ cityId }))
+    }, [dispatch, cityId])
 
 
     useEffect(() => {

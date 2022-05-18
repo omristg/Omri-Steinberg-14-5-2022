@@ -8,6 +8,7 @@ export const cacheService = {
 }
 
 function getByIdIfValid(cityId) {
+
     const cities = _loadFromStorage()
     const city = cities.find(item => item.cityId === cityId)
     if (!city) return null
