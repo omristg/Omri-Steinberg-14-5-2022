@@ -2,7 +2,7 @@
 export const CurrentWeather = ({ city, onNavigate }) => {
 
     const { temp, dateString, weatherDesc, icon, unit } = city
-    const imgUrl = `http://vortex.accuweather.com/adc2010/images/slate/Icons/${icon}.svg`
+    const imgUrl = `https://vortex.accuweather.com/adc2010/images/slate/Icons/${icon}.svg`
 
     const formattedTime = (dateString) => {
         return new Date(dateString).toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' })

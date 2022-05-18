@@ -24,7 +24,6 @@ function upsert(city) {
     const idx = cities.findIndex(item => item.cityId === city.cityId)
     if (idx === -1) cities.push({ ...city, lastReq })
     else cities.splice(idx, 1, { ...city, lastReq })
-    console.log('saved to cache');
     _saveToStorage(cities)
 }
 
