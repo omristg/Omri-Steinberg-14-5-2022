@@ -5,7 +5,7 @@ $break-wide: 1400px;
 
 // Paddings
 :root {
-    --layout-padding: 5px;
+    --layout-padding: 10px;
 
     @media (min-width: $break-narrow) {
         --layout-padding: 40px;
