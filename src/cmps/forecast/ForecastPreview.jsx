@@ -4,7 +4,7 @@ export const ForecastPreview = ({ forecast }) => {
     const { Day, Temperature } = forecast
     const { Icon } = Day
     const dateString = forecast.Date
-    const imgUrl = `http://vortex.accuweather.com/adc2010/images/slate/Icons/${Icon}.svg`
+    const imgUrl = `https://vortex.accuweather.com/adc2010/images/slate/Icons/${Icon}.svg`
 
     const formattedDate = (dateString) => {
         return new Date(dateString).toLocaleDateString('he-IL')
