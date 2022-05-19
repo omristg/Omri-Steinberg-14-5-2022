@@ -90,7 +90,7 @@ export const weatherSlice = createSlice({
         },
         setIsByDefaultCityTrue: (state) => {
             state.isByDefaultCity = true
-            state.currCity = state.defaultCity
+            state.currCity = { ...state.currCity, ...state.defaultCity }
         },
         setIsByDefaultCityFalse: (state) => {
             state.isByDefaultCity = false

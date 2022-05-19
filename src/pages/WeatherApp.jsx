@@ -23,7 +23,8 @@ export const WeatherApp = () => {
 
 
     useEffect(() => {
-        if (isError) toast.error(message, {
+        if (!isError) return
+        toast.error(message, {
             hideProgressBar: false,
             autoClose: 3000
         })
@@ -33,6 +34,7 @@ export const WeatherApp = () => {
     if (isLoading || !currWeather) return <Spinner />
 
     const currCityWithWeather = { ...currCity, ...currWeather }
+
 
     return (
         <div className="weather-app">
