@@ -159,8 +159,8 @@ export const checkIsFavorite = (cityId) => (dispatch) => {
     if (isFavorite) dispatch(setIsFavorite(true))
 }
 
-export const setIsByDefaultCity = (payload) => (dispatch) => {
-    if (payload) dispatch(setIsByDefaultCityTrue())
+export const setIsByDefaultCity = (boolean) => (dispatch) => {
+    if (boolean) dispatch(setIsByDefaultCityTrue())
     else dispatch(setIsByDefaultCityFalse())
 }
 

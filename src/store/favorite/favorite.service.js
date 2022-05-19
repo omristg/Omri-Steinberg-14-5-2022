@@ -20,6 +20,8 @@ function removeFavorite(cityId) {
 
 function addFavorite(cityToSave) {
     const favorites = _loadFromStorage()
+    const sameCity = favorites.find(city => city.cityId === cityToSave.cityId)
+    if (sameCity) return favorites
     favorites.unshift(cityToSave)
     saveToStrorage(favorites)
     return favorites
