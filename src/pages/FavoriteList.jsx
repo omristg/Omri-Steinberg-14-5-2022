@@ -32,14 +32,14 @@ export const FavoriteList = () => {
         <DragDropContext onDragEnd={handleDrag}>
             <Droppable droppableId="favorite-list">
                 {(provided) => (
-                    <div className="favorites-list"
+                    <ul className="favorites-list"
                         {...provided.droppableProps} ref={provided.innerRef}
                     >
                         {favorites.map((city, idx) =>
                             <FavoritePreview key={city.cityId} city={city} idx={idx} />
                         )}
                         {provided.placeholder}
-                    </div>
+                    </ul>
                 )}
             </Droppable>
         </DragDropContext>

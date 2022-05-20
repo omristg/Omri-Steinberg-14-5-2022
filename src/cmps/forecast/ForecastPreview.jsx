@@ -34,7 +34,7 @@ export const ForecastPreview = ({ forecast }) => {
     }
 
     return (
-        <div className="forecast-preview">
+        <li className="forecast-preview">
             <div className="img-container">
                 <img src={imgUrl} alt={Day.IconPhrase} />
                 <div className="day">{shortenedDay(dateString)}</div>
@@ -55,6 +55,6 @@ export const ForecastPreview = ({ forecast }) => {
                 </div>
                 <div className="date">{formattedDate(dateString)}</div>
             </div>
-        </div>
+        </li>
     )
 }

@@ -93,7 +93,8 @@
             transform: translateX(150%);
             transition: transform 0.2s;
             height: 100vh;
-            background-color: var(--bg-clr);
+            background-color: var(--header-bg-clr);
+            backdrop-filter: blur(8px);
             box-shadow: -3px 0 18px var(--shadow-clr);
             z-index: 150;
             width: calc(min(230px, 75%));

@@ -30,7 +30,7 @@ export const FavoritePreview = ({ city, idx }) => {
     return (
         <Draggable draggableId={cityId} index={idx} key={cityId}>
             {(provided) => (
-                <div className='favorite-preview'
+                <li className='favorite-preview'
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
@@ -42,7 +42,7 @@ export const FavoritePreview = ({ city, idx }) => {
                         </div>
                     </div>
                     <CurrentWeather city={city} onNavigate={onNavigate} />
-                </div>
+                </li>
             )}
         </Draggable>
     )

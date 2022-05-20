@@ -37,10 +37,10 @@ export const WeatherApp = () => {
 
 
     return (
-        <div className="weather-app">
+        <main className="weather-app">
             <SearchBar />
             <CityDetails city={currCityWithWeather} />
             <ForecastList forecasts={forecasts} />
-        </div>
+        </main>
     )
 }
