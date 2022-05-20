@@ -19,8 +19,8 @@ export const useConfirm = () => {
 
     const confirm = (text) => {
         dispatch(showConfirm(text))
-        return new Promise((res, rej) => {
-            resolveCallback = res
+        return new Promise((resolve, reject) => {
+            resolveCallback = resolve
         })
     }
 
