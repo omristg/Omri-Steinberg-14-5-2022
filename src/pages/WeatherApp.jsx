@@ -18,7 +18,7 @@ export const WeatherApp = () => {
 
 
     useEffect(() => {
-        dispatch(getForecastAndCurrWeather({ cityId }))
+        dispatch(getForecastAndCurrWeather(cityId))
     }, [dispatch, cityId])
 
 

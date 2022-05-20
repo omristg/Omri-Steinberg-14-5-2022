@@ -1,3 +1,6 @@
+import { useEffect, useState } from "react"
+import { useSelector } from "react-redux"
+import { preferencesService } from "../../store/preferences/preferences.service"
 
 export const ForecastPreview = ({ forecast }) => {
 
@@ -5,6 +8,21 @@ export const ForecastPreview = ({ forecast }) => {
     const { Icon } = Day
     const dateString = forecast.Date
     const imgUrl = `https://vortex.accuweather.com/adc2010/images/slate/Icons/${Icon}.svg`
+
+    const { isMetric } = useSelector(({ preferencesModule }) => preferencesModule)
+
+    const [maxTempToShow, setMaxTempToShow] = useState(Temperature.Maximum.Value)
+    const [minTempToShow, setMinTempToShow] = useState(Temperature.Minimum.Value)
+    const [unitToShow, setUnitToShow] = useState('C')
+
+    useEffect(() => {
+        if (isMetric) return
+        const newMaxTemp = preferencesService.convertToFahrenheit(Temperature.Maximum.Value)
+        const newMinTemp = preferencesService.convertToFahrenheit(Temperature.Minimum.Value)
+        setMaxTempToShow(newMaxTemp)
+        setMinTempToShow(newMinTemp)
+        setUnitToShow('F')
+    }, [isMetric, Temperature])
 
     const formattedDate = (dateString) => {
         return new Date(dateString).toLocaleDateString('he-IL')
@@ -28,11 +46,11 @@ export const ForecastPreview = ({ forecast }) => {
                 <div className="temps">
                     <div >
                         <span className="title">Max:</span>
-                        <span>{Temperature.Maximum.Value}&deg;{Temperature.Maximum.Unit}</span>
+                        <span>{maxTempToShow}&deg;{unitToShow}</span>
                     </div>
                     <div >
                         <span className="title">Min:</span>
-                        <span>{Temperature.Minimum.Value}&deg;{Temperature.Minimum.Unit}</span>
+                        <span>{minTempToShow}&deg;{unitToShow}</span>
                     </div>
                 </div>
                 <div className="date">{formattedDate(dateString)}</div>

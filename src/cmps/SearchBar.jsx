@@ -65,7 +65,7 @@ export const SearchBar = () => {
         resetSearch()
         dispatch(setIsByDefaultCity(false))
         dispatch(setCurrCity(city))
-        dispatch(getForecastAndCurrWeather({ cityId: city.cityId }))
+        dispatch(getForecastAndCurrWeather(city.cityId))
     }
 
     return (

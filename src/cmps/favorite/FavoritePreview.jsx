@@ -15,7 +15,6 @@ export const FavoritePreview = ({ city, idx }) => {
     const dispatch = useDispatch()
     const { confirm } = useConfirm();
     const { cityName, countryName, cityId } = city
-    console.log(city);
 
     const onNavigate = () => {
         dispatch(setIsByDefaultCity(false))
@@ -30,11 +29,11 @@ export const FavoritePreview = ({ city, idx }) => {
 
     return (
         <Draggable draggableId={cityId} index={idx} key={cityId}>
-            {(provider) => (
+            {(provided) => (
                 <div className='favorite-preview'
-                    ref={provider.innerRef}
-                    {...provider.draggableProps}
-                    {...provider.dragHandleProps}
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
                 >
                     <div className="details-sections">
                         <h4 onClick={onNavigate}>{`${cityName}, ${countryName}`}</h4>

@@ -3,6 +3,7 @@ import { weatherService } from '../weather/weather.service'
 import { favoriteService } from './favorite.service'
 import { setDefaultIsFavorite, setIsFavorite } from '../weather/weather.slice'
 import { toast } from 'react-toastify'
+import { cacheService } from '../weather/cache.service'
 
 const initialState = {
     favorites: [],
@@ -19,6 +20,10 @@ export const getFavorites = createAsyncThunk('favorite/getFavorites',
         try {
             const favsWithWeather = await Promise.all(
                 favorites.map(async (city) => {
+
+                    const cachedCity = cacheService.getByIdIfValid(city.cityId)
+                    if (cachedCity) return { ...city, ...cachedCity.weather }
+
                     const weather = await weatherService.getCurrConditions(city.cityId, isMetric)
                     return { ...city, ...weather }
                 })
@@ -60,16 +65,15 @@ export const favoriteSlice = createSlice({
 export const { setFavorites } = favoriteSlice.actions
 
 export const addFavorite = (city) => (dispatch) => {
-    dispatch(checkIsItDefaultCity(city.cityId, true))
+    dispatch(checkIsItDefaultCityAndSet(city.cityId, true))
     dispatch(setIsFavorite(true))
-    const cityToSave = { ...city, isFavorite: true }
-    const newFavorites = favoriteService.addFavorite(cityToSave)
+    const newFavorites = favoriteService.addFavorite(city)
     dispatch(setFavorites(newFavorites))
     toast.success('City added to favorites!')
 }
 
 export const removeFavorite = (cityId) => (dispatch) => {
-    checkIsItDefaultCity(cityId, false)
+    checkIsItDefaultCityAndSet(cityId, false)
     dispatch(setIsFavorite(false))
     const newFavorites = favoriteService.removeFavorite(cityId)
     dispatch(setFavorites(newFavorites))
@@ -81,7 +85,7 @@ export const saveFavorites = (favorites) => (dispatch) => {
     dispatch(setFavorites(favorites))
 }
 
-export const checkIsItDefaultCity = (cityId, action) => (dispatch, getState) => {
+export const checkIsItDefaultCityAndSet = (cityId, action) => (dispatch, getState) => {
     const { defaultCity } = getState().weatherModule
     if (defaultCity.cityId === cityId) dispatch(setDefaultIsFavorite(action))
 }

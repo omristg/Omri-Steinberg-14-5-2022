@@ -1,6 +1,7 @@
 import axios from "axios"
 
-const API_KEY = process.env.REACT_APP_WEATHER_API_KEY
+// const API_KEY = process.env.REACT_APP_WEATHER_API_KEY
+const API_KEY = 'ye8Veubbl8iTtQelFT5Pi1vpMjN2Z40h'
 
 // End Points
 const CURRENT_CONDITIONS_END_POINT = '/currentconditions/v1/'
@@ -22,14 +23,13 @@ export const weatherService = {
     getCityByGeoPosition
 }
 
-async function getCurrConditions(cityId, isMetric) {
+async function getCurrConditions(cityId) {
     try {
         const { data } = await accuWeather.get(`${CURRENT_CONDITIONS_END_POINT}${cityId}`)
         const currCondition = data[0]
         return {
             dateString: currCondition.LocalObservationDateTime,
-            temp: isMetric ? currCondition.Temperature.Metric.Value : currCondition.Temperature.Imperial.Value,
-            unit: isMetric ? currCondition.Temperature.Metric.Unit : currCondition.Temperature.Imperial.Unit,
+            temp: currCondition.Temperature.Metric.Value,
             icon: currCondition.WeatherIcon,
             weatherDesc: currCondition.WeatherText
         }
@@ -40,7 +40,7 @@ async function getCurrConditions(cityId, isMetric) {
 
 async function getForecast(cityId, isMetric) {
     const params = {
-        metric: isMetric
+        metric: true
     }
     try {
         const { data } = await accuWeather.get(`${FIVE_DAYS_FORECAST_END_POINT}${cityId}`, { params })

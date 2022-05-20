@@ -15,7 +15,7 @@ export const toggleIsMetric = createAsyncThunk('preferences/toggleIsMetric',
         thunkAPI.dispatch(setIsMetric(!isMetric))
 
         try {
-            thunkAPI.dispatch(getForecastAndCurrWeather({ cityId, isForcedToReq: true }))
+            thunkAPI.dispatch(getForecastAndCurrWeather(cityId))
         } catch (err) {
             const msg = err.response?.data?.message || err.message || err.toString()
             return thunkAPI.rejectWithValue(msg)

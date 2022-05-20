@@ -24,22 +24,19 @@ const initialState = {
 
 
 export const getForecastAndCurrWeather = createAsyncThunk('weather/getForecastAndWeather',
-    async ({ cityId, isForcedToReq }, thunkAPI) => {
+    async (cityId, thunkAPI) => {
 
-        const { isMetric } = thunkAPI.getState().preferencesModule
-        const { currCity, isByDefaultCity } = thunkAPI.getState().weatherModule
-        if (isByDefaultCity) cityId = currCity.cityId
+        const { defaultCity, isByDefaultCity } = thunkAPI.getState().weatherModule
+        if (isByDefaultCity) cityId = defaultCity.cityId
         thunkAPI.dispatch(checkIsFavorite(cityId))
 
-        if (!isForcedToReq) {
-            const cachedCity = cacheService.getByIdIfValid(cityId)
-            if (cachedCity) return cachedCity
-        }
+        const cachedCity = cacheService.getByIdIfValid(cityId)
+        if (cachedCity) return cachedCity
 
         try {
             const [currWeather, forecasts] = await Promise.all([
-                weatherService.getCurrConditions(cityId, isMetric),
-                weatherService.getForecast(cityId, isMetric)
+                weatherService.getCurrConditions(cityId),
+                weatherService.getForecast(cityId)
             ])
             const city = { currWeather, forecasts, cityId }
             cacheService.upsert(city)
