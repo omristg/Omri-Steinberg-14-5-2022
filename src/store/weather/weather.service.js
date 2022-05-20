@@ -1,7 +1,6 @@
 import axios from "axios"
 
-// const API_KEY = process.env.REACT_APP_WEATHER_API_KEY
-const API_KEY = 'ye8Veubbl8iTtQelFT5Pi1vpMjN2Z40h'
+const API_KEY = process.env.REACT_APP_WEATHER_API_KEY
 
 // End Points
 const CURRENT_CONDITIONS_END_POINT = '/currentconditions/v1/'
