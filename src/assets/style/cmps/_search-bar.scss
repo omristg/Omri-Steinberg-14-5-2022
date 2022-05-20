@@ -8,7 +8,6 @@
         position: relative;
         $text-padding-inline: 0.4rem;
         .search-input {
-            max-width: 2rem;
             background-color: var(--input-clr);
             color: var(--text-clr);
             font-family: Montserrat, sans-serif;
@@ -18,10 +17,6 @@
             padding: 0.4rem 0.8rem;
             transition: width 0.2s;
             box-shadow: 0 3px 14px var(--shadow-clr);
-
-            &.open {
-                max-width: 15rem;
-            }
         }
         .search-icon {
             position: absolute;

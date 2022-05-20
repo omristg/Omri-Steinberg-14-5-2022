@@ -23,6 +23,7 @@
     }
     .details {
         padding: 1rem 0.3rem 0.5rem;
+        font-size: 0.8rem;
         .weather-desc {
             min-height: 3rem;
             display: grid;
@@ -41,8 +42,20 @@
         }
 
         .date {
-            font-size: 1.2rem;
+            font-size: 1rem;
             display: inline-block;
+        }
+    }
+}
+
+@media (min-width: 500px) {
+    .forecast-preview {
+        .details {
+            font-size: 1rem;
+
+            .date {
+                font-size: 1.2rem;
+            }
         }
     }
 }

@@ -72,7 +72,7 @@ export const SearchBar = () => {
         <div className="search-bar">
             <div className="container">
                 <input
-                    className="search-input open"
+                    className="search-input"
                     type="text"
                     value={searchVal}
                     onChange={handleChange}
