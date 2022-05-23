@@ -9,20 +9,26 @@ export const ForecastPreview = ({ forecast }) => {
     const dateString = forecast.Date
     const imgUrl = `https://vortex.accuweather.com/adc2010/images/slate/Icons/${Icon}.svg`
 
+    const maxTemp = Temperature.Maximum.Value
+    const minTemp = Temperature.Minimum.Value
+
     const { isMetric } = useSelector(({ preferencesModule }) => preferencesModule)
 
-    const [maxTempToShow, setMaxTempToShow] = useState(Temperature.Maximum.Value)
-    const [minTempToShow, setMinTempToShow] = useState(Temperature.Minimum.Value)
+    const [maxTempToShow, setMaxTempToShow] = useState(maxTemp)
+    const [minTempToShow, setMinTempToShow] = useState(minTemp)
     const [unitToShow, setUnitToShow] = useState('C')
 
     useEffect(() => {
-        if (isMetric) return
-        const newMaxTemp = preferencesService.convertToFahrenheit(Temperature.Maximum.Value)
-        const newMinTemp = preferencesService.convertToFahrenheit(Temperature.Minimum.Value)
+        let newMaxTemp = maxTemp
+        let newMinTemp = minTemp
+        if (!isMetric) {
+            newMaxTemp = preferencesService.convertToFahrenheit(maxTemp)
+            newMinTemp = preferencesService.convertToFahrenheit(minTemp)
+        }
         setMaxTempToShow(newMaxTemp)
         setMinTempToShow(newMinTemp)
-        setUnitToShow('F')
-    }, [isMetric, Temperature])
+        setUnitToShow(isMetric ? 'C' : 'F')
+    }, [isMetric, maxTemp, minTemp])
 
     const formattedDate = (dateString) => {
         return new Date(dateString).toLocaleDateString('he-IL')

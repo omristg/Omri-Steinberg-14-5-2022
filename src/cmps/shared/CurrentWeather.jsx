@@ -16,10 +16,10 @@ export const CurrentWeather = ({ city, onNavigate }) => {
     }
 
     useEffect(() => {
-        if (isMetric) return
-        const newTemp = preferencesService.convertToFahrenheit(temp)
+        let newTemp = temp
+        if (!isMetric) newTemp = preferencesService.convertToFahrenheit(temp)
         setTempToShow(newTemp)
-        setUnitToShow('F')
+        setUnitToShow(isMetric ? 'C' : 'F')
     }, [isMetric, temp])
 
 
@@ -31,7 +31,6 @@ export const CurrentWeather = ({ city, onNavigate }) => {
             </div>
             <div className="details">
                 <div className="weather-desc">{weatherDesc}</div>
-                {/* <div className="temp" >{temp}&deg;{unit}</div> */}
                 <div className="temp" >{tempToShow}&deg;{unitToShow}</div>
             </div>
         </div>
