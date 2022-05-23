@@ -9,7 +9,7 @@ export const useUpdateEffect = (cb, dependencies) => {
             isMounted.current = false
             return
         }
-        cb()
+        return cb()
         // eslint-disable-next-line
     }, dependencies)
 
