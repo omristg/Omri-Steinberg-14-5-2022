@@ -11,12 +11,11 @@ import { Spinner } from '../cmps/layout/Spinner'
 export const FavoriteList = () => {
 
     const { favorites, isLoading } = useSelector(({ favoriteModule }) => favoriteModule)
-    const { isMetric } = useSelector(({ preferencesModule }) => preferencesModule)
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(getFavorites())
-    }, [dispatch, isMetric])
+    }, [dispatch])
 
     const handleDrag = (ev) => {
         const newFavorites = [...favorites]

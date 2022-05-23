@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { setDefaultIsFavorite, setIsFavorite } from '../weather/weather.slice'
 import { weatherService } from '../weather/weather.service'
 import { favoriteService } from './favorite.service'
-import { setDefaultIsFavorite, setIsFavorite } from '../weather/weather.slice'
-import { toast } from 'react-toastify'
 import { cacheService } from '../weather/cache.service'
+import { toast } from 'react-toastify'
 
 const initialState = {
     favorites: [],
@@ -14,7 +14,6 @@ const initialState = {
 
 export const getFavorites = createAsyncThunk('favorite/getFavorites',
     async (_, thunkAPI) => {
-        const { isMetric } = thunkAPI.getState().preferencesModule
         const favorites = favoriteService.getFavorites()
 
         try {
@@ -24,7 +23,7 @@ export const getFavorites = createAsyncThunk('favorite/getFavorites',
                     const cachedCity = cacheService.getByIdIfValid(city.cityId)
                     if (cachedCity) return { ...city, ...cachedCity.weather }
 
-                    const weather = await weatherService.getCurrConditions(city.cityId, isMetric)
+                    const weather = await weatherService.getCurrConditions(city.cityId)
                     return { ...city, ...weather }
                 })
             )
