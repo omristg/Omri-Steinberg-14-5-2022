@@ -42,6 +42,10 @@ export const favoriteSlice = createSlice({
     reducers: {
         setFavorites: (state, action) => {
             state.favorites = action.payload
+        },
+        resetError: (state) => {
+            state.message = ''
+            state.isError = false
         }
     },
     extraReducers: (builder) => {
@@ -61,7 +65,7 @@ export const favoriteSlice = createSlice({
     }
 })
 
-export const { setFavorites } = favoriteSlice.actions
+export const { setFavorites, resetError } = favoriteSlice.actions
 
 export const addFavorite = (city) => (dispatch) => {
     dispatch(checkIsItDefaultCityAndSet(city.cityId, true))

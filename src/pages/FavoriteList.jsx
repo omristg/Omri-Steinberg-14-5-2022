@@ -6,16 +6,28 @@ import { getFavorites, saveFavorites } from "../store/favorite/favorite.slice";
 
 import { FavoritePreview } from "../cmps/favorite/FavoritePreview";
 import { Spinner } from '../cmps/layout/Spinner'
+import { toast } from "react-toastify";
+import { resetError } from "../store/favorite/favorite.slice";
 
 
 export const FavoriteList = () => {
 
-    const { favorites, isLoading } = useSelector(({ favoriteModule }) => favoriteModule)
+    const { favorites, isLoading, isError, message } = useSelector(({ favoriteModule }) => favoriteModule)
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(getFavorites())
     }, [dispatch])
+
+    useEffect(() => {
+        if (!isError) return
+        toast.error(message, {
+            hideProgressBar: false,
+            autoClose: 3000
+        })
+        dispatch(resetError())
+    }, [dispatch, isError, message])
+
 
     const handleDrag = (ev) => {
         const newFavorites = [...favorites]
