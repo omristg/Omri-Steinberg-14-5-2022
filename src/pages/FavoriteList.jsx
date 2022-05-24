@@ -2,12 +2,11 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 
-import { getFavorites, saveFavorites } from "../store/favorite/favorite.slice";
+import { getFavorites, saveFavorites, resetError } from "../store/favorite/favorite.slice";
 
 import { FavoritePreview } from "../cmps/favorite/FavoritePreview";
 import { Spinner } from '../cmps/layout/Spinner'
 import { toast } from "react-toastify";
-import { resetError } from "../store/favorite/favorite.slice";
 
 
 export const FavoriteList = () => {

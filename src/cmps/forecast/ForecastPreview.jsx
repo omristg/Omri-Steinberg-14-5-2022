@@ -35,8 +35,8 @@ export const ForecastPreview = ({ forecast }) => {
     }
 
     const shortenedDay = (dateString) => {
-        const newDate = new Date(dateString)
-        return new Intl.DateTimeFormat('en-US', { weekday: 'short' }).format(newDate)
+        const date = new Date(dateString)
+        return new Intl.DateTimeFormat('en-US', { weekday: 'short' }).format(date)
     }
 
     return (

@@ -1,6 +1,6 @@
 import { motion } from "framer-motion"
 
-export function Backdrop({ handleClose, isClosable }) {
+export const Backdrop = ({ handleClose, isClosable }) => {
 
     return (
         <motion.div
