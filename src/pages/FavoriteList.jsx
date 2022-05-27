@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
+import { motion } from "framer-motion";
 
 import { getFavorites, saveFavorites, resetError } from "../store/favorite/favorite.slice";
 
@@ -42,14 +43,16 @@ export const FavoriteList = () => {
         <DragDropContext onDragEnd={handleDrag}>
             <Droppable droppableId="favorite-list">
                 {(provided) => (
-                    <ul className="favorites-list"
+                    <motion.ul
+                        className="favorites-list"
+                        layout
                         {...provided.droppableProps} ref={provided.innerRef}
                     >
                         {favorites.map((city, idx) =>
                             <FavoritePreview key={city.cityId} city={city} idx={idx} />
                         )}
                         {provided.placeholder}
-                    </ul>
+                    </motion.ul>
                 )}
             </Droppable>
         </DragDropContext>
