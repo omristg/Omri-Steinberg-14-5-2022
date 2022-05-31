@@ -37,7 +37,7 @@ async function getCurrConditions(cityId) {
     }
 }
 
-async function getForecast(cityId, isMetric) {
+async function getForecast(cityId) {
     const params = {
         metric: true
     }
@@ -63,7 +63,8 @@ async function runAutoComplete(query) {
         }))
         return options
     } catch (err) {
-        throw err
+        const msg = err.response?.data?.message || err.message || err.toString()
+        throw msg
     }
 }
 

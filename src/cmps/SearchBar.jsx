@@ -1,21 +1,23 @@
 import { useEffect, useState } from "react"
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useDebounce } from '../hooks/useDebounce'
 import { useUpdateEffect } from '../hooks/useUpdateEffect'
 
-import { getForecastAndCurrWeather, setCurrCity, setIsByDefaultCity, setCityOptions, getCityOptions } from '../store/weather/weather.slice'
+import { getForecastAndCurrWeather, setCurrCity, setIsByDefaultCity } from '../store/weather/weather.slice'
 
 import { BsSearch } from 'react-icons/bs'
 import { DataList } from './DataList'
+import { weatherService } from "../store/weather/weather.service"
+import { toast } from "react-toastify"
 
 export const SearchBar = () => {
 
-    const { cityOptions } = useSelector(({ weatherModule }) => weatherModule)
     const dispatch = useDispatch()
 
     const [searchVal, setSearchVal] = useState('')
     const [selectedCityIdx, setSelectedCityIdx] = useState(0)
     const [isInvalid, setisInvalid] = useState(false)
+    const [cityOptions, setCityOptions] = useState([])
     const debouncedValue = useDebounce(searchVal, 200)
 
 
@@ -24,8 +26,20 @@ export const SearchBar = () => {
     }
 
     useUpdateEffect(() => {
-        if (!debouncedValue || isInvalid) return dispatch(setCityOptions([]));
-        dispatch(getCityOptions(debouncedValue))
+        if (!debouncedValue || isInvalid) return setCityOptions([])
+        else getCityOptions()
+        async function getCityOptions() {
+            try {
+                const cityOptions = await weatherService.runAutoComplete(debouncedValue)
+                setCityOptions(cityOptions)
+            } catch (err) {
+                toast.error(err, {
+                    hideProgressBar: false,
+                    autoClose: 3000
+                })
+                setCityOptions([])
+            }
+        }
     }, [debouncedValue])
 
 
@@ -41,7 +55,7 @@ export const SearchBar = () => {
 
     const resetSearch = () => {
         setSearchVal('')
-        dispatch(setCityOptions([]))
+        setCityOptions([])
     }
 
     const handleKeyPress = ({ key }) => {

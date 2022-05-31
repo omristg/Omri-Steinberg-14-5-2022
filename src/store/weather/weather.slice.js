@@ -14,7 +14,6 @@ const initialState = {
     isByDefaultCity: true,
     currWeather: null,
     forecasts: [],
-    cityOptions: [],
     isLoading: true,
     isError: false,
     message: ''
@@ -57,20 +56,9 @@ export const setGeoPositionCity = createAsyncThunk('weather/setGeoPositionCity',
             const msg = err.response?.data?.message || err.message || err.toString()
             return thunkAPI.rejectWithValue(msg)
         }
-
     }
 )
 
-export const getCityOptions = createAsyncThunk('weather/getCityOptions',
-    async (searchVal, thunkAPI) => {
-        try {
-            return await weatherService.runAutoComplete(searchVal)
-        } catch (err) {
-            const msg = err.response?.data?.message || err.message || err.toString()
-            return thunkAPI.rejectWithValue(msg)
-        }
-    }
-)
 
 export const weatherSlice = createSlice({
     name: 'weather',
@@ -79,18 +67,12 @@ export const weatherSlice = createSlice({
         setCurrCity: (state, action) => {
             state.currCity = action.payload
         },
-        setIsByDefaultCityTrue: (state) => {
-            state.isByDefaultCity = true
-            state.currCity = { ...state.currCity, ...state.defaultCity }
-        },
-        setIsByDefaultCityFalse: (state) => {
-            state.isByDefaultCity = false
-        },
         setDefaultCity: (state, action) => {
             state.defaultCity = action.payload
         },
-        setCityOptions: (state, action) => {
-            state.cityOptions = action.payload
+        setIsByDefaultCity: (state, action) => {
+            state.isByDefaultCity = action.payload
+            if (action.payload) state.currCity = { ...state.currCity, ...state.defaultCity }
         },
         resetError: (state) => {
             state.isError = false
@@ -127,23 +109,9 @@ export const weatherSlice = createSlice({
                 state.currCity = action.payload
                 state.isLoading = false
             })
-            // getCityOptions
-            .addCase(getCityOptions.rejected, (state, action) => {
-                state.isError = true
-                state.message = action.payload
-            })
-            .addCase(getCityOptions.fulfilled, (state, action) => {
-                state.cityOptions = action.payload
-            })
     }
 })
 
-export const { setCurrCity, setDefaultCity, setCityOptions, resetError,
-    setIsByDefaultCityTrue, setIsByDefaultCityFalse } = weatherSlice.actions
-
-export const setIsByDefaultCity = (boolean) => (dispatch) => {
-    if (boolean) dispatch(setIsByDefaultCityTrue())
-    else dispatch(setIsByDefaultCityFalse())
-}
+export const { setCurrCity, setDefaultCity, resetError, setIsByDefaultCity } = weatherSlice.actions
 
 export default weatherSlice.reducer
