@@ -4,7 +4,8 @@ export const favoriteService = {
     getFavorites,
     removeFavorite,
     addFavorite,
-    saveToStrorage
+    saveToStrorage,
+    checkIsFavorite
 }
 
 function getFavorites() {
@@ -29,6 +30,11 @@ function addFavorite(cityToSave) {
 
 function saveToStrorage(favorites) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(favorites))
+}
+
+function checkIsFavorite(cityId) {
+    const favorites = getFavorites()
+    return favorites.some(city => city.cityId === cityId)
 }
 
 function _loadFromStorage() {

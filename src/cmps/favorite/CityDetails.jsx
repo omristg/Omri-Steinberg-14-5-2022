@@ -5,17 +5,26 @@ import { CurrentWeather } from '../shared/CurrentWeather'
 import { addFavorite, removeFavorite } from '../../store/favorite/favorite.slice'
 
 import { MdOutlineFavoriteBorder, MdFavorite } from 'react-icons/md'
+import { favoriteService } from '../../store/favorite/favorite.service'
+import { useState } from 'react'
 
 
 export const CityDetails = ({ city }) => {
 
+    const { cityName, countryName, cityId } = city
+    const [isFavorite, setIsFavorite] = useState(favoriteService.checkIsFavorite(cityId))
     const dispatch = useDispatch()
     const { confirm } = useConfirm();
-    const { cityName, countryName, isFavorite, cityId } = city
 
     const onRemoveFavorite = async () => {
         if (!await confirm('Do you confirm your choice?')) return
+        setIsFavorite(false)
         dispatch(removeFavorite(cityId))
+    }
+
+    const onAddFavorite = () => {
+        setIsFavorite(true)
+        dispatch(addFavorite(city))
     }
 
     return (
@@ -26,7 +35,7 @@ export const CityDetails = ({ city }) => {
                     {isFavorite ? (
                         <MdFavorite onClick={onRemoveFavorite} />
                     ) : (
-                        <MdOutlineFavoriteBorder onClick={() => dispatch(addFavorite(city))} />
+                        <MdOutlineFavoriteBorder onClick={onAddFavorite} />
                     )}
                 </div>
             </div>

@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { favoriteService } from '../favorite/favorite.service'
 import { cacheService } from './cache.service'
 import { weatherService } from './weather.service'
 
@@ -7,7 +6,6 @@ const DEFAULT_CITY = {
     cityId: '215854',
     cityName: 'Tel Aviv',
     countryName: 'Israel',
-    isFavorite: false
 }
 
 const initialState = {
@@ -28,7 +26,6 @@ export const getForecastAndCurrWeather = createAsyncThunk('weather/getForecastAn
 
         const { defaultCity, isByDefaultCity } = thunkAPI.getState().weatherModule
         if (isByDefaultCity) cityId = defaultCity.cityId
-        thunkAPI.dispatch(checkIsFavorite(cityId))
 
         const cachedCity = cacheService.getByIdIfValid(cityId)
         if (cachedCity) return cachedCity
@@ -82,9 +79,6 @@ export const weatherSlice = createSlice({
         setCurrCity: (state, action) => {
             state.currCity = action.payload
         },
-        setIsFavorite: (state, action) => {
-            state.currCity.isFavorite = action.payload
-        },
         setIsByDefaultCityTrue: (state) => {
             state.isByDefaultCity = true
             state.currCity = { ...state.currCity, ...state.defaultCity }
@@ -94,9 +88,6 @@ export const weatherSlice = createSlice({
         },
         setDefaultCity: (state, action) => {
             state.defaultCity = action.payload
-        },
-        setDefaultIsFavorite: (state, action) => {
-            state.defaultCity.isFavorite = action.payload
         },
         setCityOptions: (state, action) => {
             state.cityOptions = action.payload
@@ -147,14 +138,8 @@ export const weatherSlice = createSlice({
     }
 })
 
-export const { setCurrCity, setIsFavorite, setDefaultCity, setCityOptions, resetError,
-    setDefaultIsFavorite, setIsByDefaultCityTrue, setIsByDefaultCityFalse } = weatherSlice.actions
-
-export const checkIsFavorite = (cityId) => (dispatch) => {
-    const favorites = favoriteService.getFavorites()
-    const isFavorite = favorites.some(favCity => favCity.cityId === cityId)
-    if (isFavorite) dispatch(setIsFavorite(true))
-}
+export const { setCurrCity, setDefaultCity, setCityOptions, resetError,
+    setIsByDefaultCityTrue, setIsByDefaultCityFalse } = weatherSlice.actions
 
 export const setIsByDefaultCity = (boolean) => (dispatch) => {
     if (boolean) dispatch(setIsByDefaultCityTrue())

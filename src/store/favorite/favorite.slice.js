@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { setDefaultIsFavorite, setIsFavorite } from '../weather/weather.slice'
 import { weatherService } from '../weather/weather.service'
 import { favoriteService } from './favorite.service'
 import { cacheService } from '../weather/cache.service'
@@ -68,16 +67,12 @@ export const favoriteSlice = createSlice({
 export const { setFavorites, resetError } = favoriteSlice.actions
 
 export const addFavorite = (city) => (dispatch) => {
-    dispatch(checkIsItDefaultCityAndSet(city.cityId, true))
-    dispatch(setIsFavorite(true))
     const newFavorites = favoriteService.addFavorite(city)
     dispatch(setFavorites(newFavorites))
     toast.success('City added to favorites!')
 }
 
 export const removeFavorite = (cityId) => (dispatch) => {
-    checkIsItDefaultCityAndSet(cityId, false)
-    dispatch(setIsFavorite(false))
     const newFavorites = favoriteService.removeFavorite(cityId)
     dispatch(setFavorites(newFavorites))
     toast.success('City removed from favorites!')
@@ -86,11 +81,6 @@ export const removeFavorite = (cityId) => (dispatch) => {
 export const saveFavorites = (favorites) => (dispatch) => {
     favoriteService.saveToStrorage(favorites)
     dispatch(setFavorites(favorites))
-}
-
-export const checkIsItDefaultCityAndSet = (cityId, action) => (dispatch, getState) => {
-    const { defaultCity } = getState().weatherModule
-    if (defaultCity.cityId === cityId) dispatch(setDefaultIsFavorite(action))
 }
 
 export default favoriteSlice.reducer
