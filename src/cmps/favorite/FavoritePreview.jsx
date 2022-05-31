@@ -8,7 +8,6 @@ import { setCurrCity, setIsByDefaultCity } from '../../store/weather/weather.sli
 
 import { MdFavorite } from 'react-icons/md'
 import { Draggable } from 'react-beautiful-dnd'
-import { motion } from "framer-motion";
 
 export const FavoritePreview = ({ city, idx }) => {
 
@@ -31,9 +30,8 @@ export const FavoritePreview = ({ city, idx }) => {
     return (
         <Draggable draggableId={cityId} index={idx} key={cityId}>
             {(provided) => (
-                <motion.li
+                <li
                     className='favorite-preview'
-                    layout
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
@@ -45,7 +43,7 @@ export const FavoritePreview = ({ city, idx }) => {
                         </div>
                     </div>
                     <CurrentWeather city={city} onNavigate={onNavigate} />
-                </motion.li>
+                </li>
             )}
         </Draggable>
     )
